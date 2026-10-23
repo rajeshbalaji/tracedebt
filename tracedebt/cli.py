@@ -12,6 +12,7 @@ its file stem is used as the window label.
 from __future__ import annotations
 
 import argparse
+import glob
 import os
 import sys
 import time
@@ -22,6 +23,23 @@ from .ingest import load_file
 from .pipeline import Analyzer
 from .report import to_dot, to_markdown, write_json
 from .spec import Spec
+
+
+def _expand(paths):
+    """Expand wildcards ourselves: Windows shells pass `w*.jsonl.gz` through
+    unchanged. Existing paths are kept as given; patterns are sorted."""
+    out = []
+    for p in paths:
+        if os.path.exists(p):
+            out.append(p)
+        elif any(c in p for c in "*?["):
+            hits = sorted(glob.glob(p))
+            if not hits:
+                raise SystemExit(f"tracedebt: no files match {p!r}")
+            out.extend(hits)
+        else:
+            raise SystemExit(f"tracedebt: file not found: {p!r}")
+    return out
 
 
 def main(argv=None) -> int:
@@ -52,6 +70,7 @@ def main(argv=None) -> int:
     i.add_argument("--ignore-service", action="append", default=[])
     i.add_argument("--ignore-op", action="append", default=[])
     args = p.parse_args(argv)
+    args.windows = _expand(args.windows)
 
     if args.cmd == "init":
         import yaml
