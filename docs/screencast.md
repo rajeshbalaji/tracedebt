@@ -1,5 +1,8 @@
 # Screencast script (about 4.5 minutes)
 
+A captioned, silent version of this script is `docs/demo.mp4`. To record a
+narrated one, follow the steps below.
+
 Record a terminal plus an editor at a readable font size. Every command
 below is in the repository; nothing needs a network connection except
 cloning.
