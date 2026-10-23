@@ -652,37 +652,37 @@
     }
    ],
    "coverage": {
-    "recommendationservice": {
-     "traces_per_window": 526.5,
-     "p_min": 0.0036930633462447515
-    },
     "currencyservice": {
      "traces_per_window": 659.2,
      "p_min": 0.002950507247931111
-    },
-    "paymentservice": {
-     "traces_per_window": 25.0,
-     "p_min": 0.07496146634392398
-    },
-    "cartservice": {
-     "traces_per_window": 636.8,
-     "p_min": 0.003054606061087428
     },
     "productcatalogservice": {
      "traces_per_window": 653.8,
      "p_min": 0.0029752929072374146
     },
+    "emailservice": {
+     "traces_per_window": 25.0,
+     "p_min": 0.07496146634392398
+    },
     "frontend": {
      "traces_per_window": 704.0,
      "p_min": 0.0027632166166092764
     },
-    "emailservice": {
+    "paymentservice": {
      "traces_per_window": 25.0,
      "p_min": 0.07496146634392398
     },
     "checkoutservice": {
      "traces_per_window": 113.5,
      "p_min": 0.0170165253512492
+    },
+    "cartservice": {
+     "traces_per_window": 636.8,
+     "p_min": 0.003054606061087428
+    },
+    "recommendationservice": {
+     "traces_per_window": 526.5,
+     "p_min": 0.0036930633462447515
     }
    },
    "inferred_edges": [
@@ -1327,37 +1327,37 @@
     }
    ],
    "coverage": {
-    "recommendationservice": {
-     "traces_per_window": 46.5,
-     "p_min": 0.04102704997024176
-    },
     "currencyservice": {
      "traces_per_window": 63.8,
      "p_min": 0.030094676982146074
-    },
-    "paymentservice": {
-     "traces_per_window": 1.5,
-     "p_min": 0.7271040627900812
-    },
-    "cartservice": {
-     "traces_per_window": 61.0,
-     "p_min": 0.03142986129471592
     },
     "productcatalogservice": {
      "traces_per_window": 63.0,
      "p_min": 0.030447436861901545
     },
+    "emailservice": {
+     "traces_per_window": 1.5,
+     "p_min": 0.7271040627900812
+    },
     "frontend": {
      "traces_per_window": 68.2,
      "p_min": 0.028138604753256025
     },
-    "emailservice": {
+    "paymentservice": {
      "traces_per_window": 1.5,
      "p_min": 0.7271040627900812
     },
     "checkoutservice": {
      "traces_per_window": 11.0,
      "p_min": 0.1622961535944646
+    },
+    "cartservice": {
+     "traces_per_window": 61.0,
+     "p_min": 0.03142986129471592
+    },
+    "recommendationservice": {
+     "traces_per_window": 46.5,
+     "p_min": 0.04102704997024176
     }
    },
    "inferred_edges": [
@@ -1424,8 +1424,41 @@
      "rule": "UNKNOWN_SERVICE",
      "edges": [
       [
+       "recommendationservice",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
        "frontend",
-       "hipstershop.RecommendationService"
+       "hipstershop.AdService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.CurrencyService"
       ]
      ],
      "confirmed_at": "w02",
@@ -1446,30 +1479,8 @@
      "rule": "UNKNOWN_SERVICE",
      "edges": [
       [
-       "frontend",
-       "hipstershop.CurrencyService"
-      ]
-     ],
-     "confirmed_at": "w02",
-     "resolved_at": null
-    },
-    {
-     "rule": "UNKNOWN_SERVICE",
-     "edges": [
-      [
-       "recommendationservice",
-       "hipstershop.ProductCatalogService"
-      ]
-     ],
-     "confirmed_at": "w02",
-     "resolved_at": null
-    },
-    {
-     "rule": "UNKNOWN_SERVICE",
-     "edges": [
-      [
        "checkoutservice",
-       "hipstershop.CurrencyService"
+       "hipstershop.ShippingService"
       ]
      ],
      "confirmed_at": "w02",
@@ -1491,7 +1502,18 @@
      "edges": [
       [
        "frontend",
-       "hipstershop.ProductCatalogService"
+       "hipstershop.ShippingService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.RecommendationService"
       ]
      ],
      "confirmed_at": "w02",
@@ -1502,29 +1524,7 @@
      "edges": [
       [
        "checkoutservice",
-       "hipstershop.ShippingService"
-      ]
-     ],
-     "confirmed_at": "w02",
-     "resolved_at": null
-    },
-    {
-     "rule": "UNKNOWN_SERVICE",
-     "edges": [
-      [
-       "frontend",
-       "hipstershop.ShippingService"
-      ]
-     ],
-     "confirmed_at": "w02",
-     "resolved_at": null
-    },
-    {
-     "rule": "UNKNOWN_SERVICE",
-     "edges": [
-      [
-       "frontend",
-       "hipstershop.AdService"
+       "hipstershop.CurrencyService"
       ]
      ],
      "confirmed_at": "w02",

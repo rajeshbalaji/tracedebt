@@ -1,9 +1,10 @@
 """Build docs/demo.mp4: a captioned terminal recording (no audio) of TraceDebt on the
-Online Boutique case-study traces. Every command is actually run when this script
+Online Boutique case-study traces, following one finding from the report to its
+evidence trace and the decision taken on it. Every command is actually run when this script
 runs and its real output is what appears on screen; only long outputs are cut.
 
     pip install pillow            # and ffmpeg on the PATH
-    python docs/make_demo.py      # writes docs/demo.mp4 (about 4 minutes)
+    python docs/make_demo.py      # writes docs/demo.mp4 (about 4.5 minutes)
 
 Commands are shown as `tracedebt ...` (the installed command); the script runs the
 same code through `python -m tracedebt` so it also works without installing.
@@ -129,62 +130,86 @@ class Film:
         shutil.rmtree(self.dir)
 
 
+def evidence_at_w08() -> str:
+    """Evidence trace of the FOREIGN_DATA finding as reported after window w08."""
+    import json
+    out = os.path.join(tempfile.gettempdir(), "tracedebt_demo_w08.json")
+    subprocess.run([sys.executable, "-m", "tracedebt", "analyze", "examples/online-boutique/spec.yaml",
+                    *[f"case-study/windows/w{i:02d}.jsonl.gz" for i in range(9)],
+                    "--json", out, "--md", os.devnull], cwd=ROOT, check=True, capture_output=True)
+    act = json.load(open(out))["active"]
+    os.remove(out)
+    return next(f["evidence_trace"] for f in act if f["rule"] == "FOREIGN_DATA")
+
+
 def main():
-    if os.path.exists(STATE):
-        os.remove(STATE)
+    for p in (STATE, DRAFT):
+        if os.path.exists(p):
+            os.remove(p)
+    ev = evidence_at_w08()
     f = Film()
     f.card(["TraceDebt", "Runtime-guided detection of architectural drift in evolving microservices",
-            "Demo on Online Boutique v0.10.7, with real OpenTelemetry traces",
-            "Captioned terminal recording; every command shown was run on the repository's own data"], 9)
+            "Online Boutique v0.10.7 with its own OpenTelemetry traces",
+            "From an unexpected runtime edge to the evidence trace to a decision",
+            "Captioned terminal recording; every command shown was run on the repository's data"], 9)
 
-    f.screen(["1. The intended architecture is a short YAML file that lives in the repository:",
-              "layers, bounded contexts, who owns the Redis store, and the calls that are allowed."],
+    f.screen(["1. The intended architecture is a short YAML file in the repository: layers,",
+              "bounded contexts, who owns the Redis cart store, and the calls that are allowed."],
              [("head -22 examples/online-boutique/spec.yaml", None)])
 
-    f.screen(["2. Six clean one-minute windows: no active drift.",
-              "Shipping and ad service emit no spans; their callers' client spans are the only evidence."],
+    f.screen(["2. Six clean one-minute windows: no active drift. Shipping and ad service emit",
+              "no spans; their callers' client spans are the only evidence of those calls."],
              [("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w0[0-5].jsonl.gz | head -21", None)])
 
-    f.screen(["3. A violation is deployed: recommendationservice reads the cart's Redis store directly",
-              "instead of asking cartservice. Windows w06, w07 and w08 are analysed one more at a time."],
+    f.screen(["3. A commit is deployed at w06. Nobody has said it breaks anything. The analysis",
+              "is re-run as windows w06, w07 and w08 arrive."],
              [("grep -A1 Subject case-study/patches/0002-*.patch", None),
               ("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w0[0-6].jsonl.gz | grep FOREIGN_DATA", None),
               ("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w0[0-7].jsonl.gz | grep FOREIGN_DATA", None),
-              ("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w0[0-8].jsonl.gz | grep FOREIGN_DATA | cut -c1-118", None)])
+              ("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w0[0-8].jsonl.gz --md report.md; \\\n  grep FOREIGN_DATA report.md | cut -d'|' -f2,4,7", None)])
     f.card(["Why nothing after one or two windows?",
-            "A call is reported only when it appears in 3 of the last 4 windows.",
-            "That keeps one-off jobs out of the report. The three-minute delay is set by",
-            "one-minute windows and this rule; it is not a speed claim."], 12)
+            "A call is reported only when it appears in 3 of the last 4 windows,",
+            "which keeps one-off jobs out of the report. The three-minute delay comes from",
+            "one-minute windows and this rule; it is not a speed claim."], 11)
 
-    f.screen(["4. The full 30-window run. Exit status 1 is what a CI gate would see.",
-              "The full report also lists an evidence trace ID for each finding, and what was resolved."],
-             [("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w*.jsonl.gz --md report.md --fail-on 4 > /dev/null 2>&1; echo \"exit status $?\"", None),
+    f.screen(["4. The finding names an edge and an evidence trace. Open it: which request,",
+              "which operation, and which span broke the agreement?"],
+             [(f"tracedebt trace {ev} \\\n    case-study/windows/w0[6-8].jsonl.gz \\\n"
+               "    --spec examples/online-boutique/spec.yaml --path", None)])
+    f.card(["Reading the evidence",
+            "A page request (GET) to the frontend asks recommendationservice for suggestions,",
+            "and recommendationservice runs HKEYS on the cart's Redis store itself.",
+            "The store belongs to cartservice, and no one agreed to share it.",
+            "Decision: a genuine violation, so the code is fixed (outcome 1 of 3).",
+            "The other outcomes: declare an intended dependency (step 6), or investigate."], 16)
+
+    f.screen(["5. The fix (a revert) is deployed at w24. The finding closes after three clean",
+              "windows. Two later violations are still open, so the CI gate still fails."],
+             [("grep -A1 Subject case-study/patches/0005-*.patch", None),
+              ("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows/w*.jsonl.gz --md report.md --fail-on 4 > /dev/null 2>&1; echo \"exit status $?\"", None),
               ("grep -E \"^\\| [0-9]\" report.md | cut -d'|' -f2-6", None),
               ("grep \"gone\" report.md", None)])
 
-    f.screen(["5. An approved change. recommendationservice may now ask cartservice which products",
-              "are in the cart, and the specification gains that one dependency in the same change."],
-             [("diff examples/online-boutique/spec.yaml \\\n     examples/online-boutique/spec_evolved.yaml | grep \"^[<>]   recommendationservice\"", None)])
+    f.screen(["6. The other outcome: an intended change. The same feature, built through",
+              "cartservice's API, is accepted in review and declared in the same commit."],
+             [("grep -A1 Subject case-study/patches/0006-*.patch", None),
+              ("diff examples/online-boutique/spec.yaml \\\n     examples/online-boutique/spec_evolved.yaml | grep \"^[<>]   recommendationservice\"", None)])
 
-    f.screen(["6. Two nightly jobs sharing --state. Job 1 runs before the spec is updated: the new call",
-              "is still reported. Job 2 runs with the updated spec: the finding closes after three clean windows."],
+    f.screen(["7. Two nightly jobs sharing --state. Job 1 still has the old spec: the new call is reported.",
+              "Job 2 has the updated spec: the finding closes after three clean windows."],
              [("tracedebt analyze examples/online-boutique/spec.yaml \\\n    case-study/windows-evolution/w0[0-9].jsonl.gz \\\n    --state state.json | grep -E \"^\\| [0-9]\" | cut -d'|' -f2-6", None),
               ("tracedebt analyze examples/online-boutique/spec_evolved.yaml \\\n    case-study/windows-evolution/w1[0-7].jsonl.gz \\\n    --state state.json | grep -E \"^\\| [0-9]|^- UNDECLARED\" | cut -c1-118", None)])
-
-    f.screen(["7. No spec yet? Draft one from clean windows and review it; bounded contexts are left to",
-              "people. In the paper the draft reproduced all 14 hand-written dependencies."],
-             [("tracedebt init case-study/windows/w0[0-5].jsonl.gz \\\n    --base examples/online-boutique/spec.yaml --out draft.yaml 2>&1", None),
-              ("grep -A1 \"Review notes\" draft.yaml", None),
-              ("sed -n '/^dependencies/,/^aliases/p' draft.yaml | head -12", None)])
 
     f.card(["What this does not show",
             "One small system, and violations and an approved change that we chose.",
             "No accuracy figure on a real system; the F1 values come from a synthetic benchmark.",
-            "A call present in fewer than 3 of 4 windows is not confirmed.",
-            "github.com/rajeshbalaji/tracedebt"], 14)
+            "Rules are per service pair, so a forbidden endpoint of an allowed service is missed,",
+            "and a call present in fewer than 3 of 4 windows is not confirmed.",
+            "github.com/rajeshbalaji/tracedebt"], 15)
     f.encode(OUT)
-    if os.path.exists(STATE):
-        os.remove(STATE)
+    for p in (STATE, DRAFT, os.path.join(ROOT, "report.md")):
+        if os.path.exists(p):
+            os.remove(p)
     print("wrote", OUT)
 
 

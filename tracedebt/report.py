@@ -96,7 +96,10 @@ def to_markdown(res: Result) -> str:
                   "fixed by a code change; (2) an intended dependency the spec has not caught up "
                   "with, fixed by declaring it; (3) unclear, for example a fallback path or a "
                   "batch job, which needs someone to look at the evidence trace before deciding. "
-                  "Use `ignore` only for infrastructure traffic, not to silence (3)."]
+                  "Use `ignore` only for infrastructure traffic, not to silence (3).", "",
+                  "To see the request behind a finding: `tracedebt trace <evidence id> "
+                  "<window files> --spec <spec> --path` prints the call path with the "
+                  "offending span marked."]
     return "\n".join(lines) + "\n"
 
 

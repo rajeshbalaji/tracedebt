@@ -49,70 +49,97 @@ class WindowGraph:
         return st.traces if st else 0
 
 
+@dataclass
+class TraceWalk:
+    """What one trace contributes: which span produced which edge."""
+    hits: List[Tuple[object, Edge, bool]] = field(default_factory=list)  # (span, edge, inferred)
+    services: Set[str] = field(default_factory=set)
+    roots: List[str] = field(default_factory=list)
+    root_dur: int = 0
+    dropped: int = 0
+    ignored_ids: Set[str] = field(default_factory=set)
+    empty: bool = False
+
+
+def walk(tr: Trace, spec: Spec) -> TraceWalk:
+    """Edges of a single trace, each tied to the span that produced it. Used by
+    `build` for whole windows and by `tracedebt trace` to point at the span
+    behind a finding."""
+    w = TraceWalk()
+    canon = spec.canon
+    kept_spans = []
+    dropped: Set[str] = set()
+    ign_s, ign_o = spec.ignored_service, spec.ignored_operation
+    for s in tr:
+        if ign_s(s.service):
+            dropped.add(s.span_id)
+            w.dropped += 1
+            w.ignored_ids.add(s.span_id)
+        elif ign_o(s.operation):
+            w.dropped += 1
+            w.ignored_ids.add(s.span_id)
+        else:
+            kept_spans.append(s)
+    if not kept_spans:        # trace made only of ignored spans (health probes, exports)
+        w.empty = True
+        return w
+    by_id = {s.span_id: s for s in tr}
+    aliases = spec.aliases
+    svc_of = {s.span_id: aliases.get(s.service, s.service) for s in tr}
+    remote_child: Set[str] = set()
+    for s in kept_spans:
+        if s.parent_id and s.parent_id in svc_of and svc_of[s.parent_id] != svc_of[s.span_id]:
+            remote_child.add(s.parent_id)
+    for s in kept_spans:
+        svc = svc_of[s.span_id]
+        w.services.add(svc)
+        if s.parent_id is None:
+            w.root_dur += s.duration_us
+            w.roots.append(svc)
+        # nearest ancestor that is not an ignored service (sidecars, proxies)
+        p = by_id.get(s.parent_id) if s.parent_id else None
+        while p is not None and p.span_id in dropped:
+            p = by_id.get(p.parent_id) if p.parent_id else None
+        psvc = svc_of[p.span_id] if p is not None else None
+        if s.msg_dest and s.kind in ("producer", "consumer"):
+            topic = TOPIC_PREFIX + canon(s.msg_dest)
+            if s.kind == "producer":
+                w.hits.append((s, (svc, topic), False))
+            else:
+                # the consumer is reached through the broker, not directly
+                # from the producing service
+                w.hits.append((s, (topic, svc), False))
+        elif psvc is not None and psvc != svc and not (p.kind == "producer" and p.msg_dest):
+            w.hits.append((s, (psvc, svc), False))
+        if s.db_name:
+            w.hits.append((s, (svc, DB_PREFIX + canon(s.db_name)), False))
+        elif (s.kind == "client" and s.span_id not in remote_child and not s.msg_dest):
+            callee = _infer_callee(s, spec)
+            if callee and callee != svc:
+                w.hits.append((s, (svc, callee), True))
+    return w
+
+
 def build(label: str, traces: Iterable[Trace], spec: Spec,
           keep_trace_edges: bool = True) -> WindowGraph:
     g = WindowGraph(label)
-    canon = spec.canon
     for tr in traces:
-        kept_spans = []
-        dropped: Set[str] = set()
-        ign_s, ign_o = spec.ignored_service, spec.ignored_operation
-        for s in tr:
-            if ign_s(s.service):
-                dropped.add(s.span_id)
-                g.dropped_spans += 1
-            elif ign_o(s.operation):
-                g.dropped_spans += 1
-            else:
-                kept_spans.append(s)
-        if not kept_spans:        # trace made only of ignored spans (health probes, exports)
+        w = walk(tr, spec)
+        g.dropped_spans += w.dropped
+        if w.empty:
             continue
-        by_id = {s.span_id: s for s in tr}
-        aliases = spec.aliases
-        svc_of = {s.span_id: aliases.get(s.service, s.service) for s in tr}
-        remote_child: Set[str] = set()
-        for s in kept_spans:
-            if s.parent_id and s.parent_id in svc_of and svc_of[s.parent_id] != svc_of[s.span_id]:
-                remote_child.add(s.parent_id)
+        for r in w.roots:
+            g.roots[r] = g.roots.get(r, 0) + 1
+        g.nodes |= w.services
         seen: Set[Edge] = set()
-        services: Set[str] = set()
-        root_dur = 0
-        for s in kept_spans:
-            svc = svc_of[s.span_id]
-            services.add(svc)
-            if s.parent_id is None or s.parent_id not in by_id:
-                if s.parent_id is None:
-                    root_dur += s.duration_us
-                    g.roots[svc] = g.roots.get(svc, 0) + 1
-            g.nodes.add(svc)
-            # nearest ancestor that is not an ignored service (sidecars, proxies)
-            p = by_id.get(s.parent_id) if s.parent_id else None
-            while p is not None and p.span_id in dropped:
-                p = by_id.get(p.parent_id) if p.parent_id else None
-            psvc = svc_of[p.span_id] if p is not None else None
-            if s.msg_dest and s.kind in ("producer", "consumer"):
-                topic = TOPIC_PREFIX + canon(s.msg_dest)
-                g.nodes.add(topic)
-                if s.kind == "producer":
-                    _add(g, (svc, topic), s, seen)
-                else:
-                    # the consumer is reached through the broker, not directly
-                    # from the producing service
-                    _add(g, (topic, svc), s, seen)
-            elif psvc is not None and psvc != svc and not (p.kind == "producer" and p.msg_dest):
-                _add(g, (psvc, svc), s, seen)
-            if s.db_name:
-                node = DB_PREFIX + canon(s.db_name)
-                g.nodes.add(node)
-                _add(g, (svc, node), s, seen)
-            elif (s.kind == "client" and s.span_id not in remote_child and not s.msg_dest):
-                callee = _infer_callee(s, spec)
-                if callee and callee != svc:
-                    g.nodes.add(callee)
-                    _add(g, (svc, callee), s, seen, inferred=True)
+        for s, e, inferred in w.hits:
+            for n in e:
+                if n.startswith(DB_PREFIX) or n.startswith(TOPIC_PREFIX) or inferred:
+                    g.nodes.add(n)
+            _add(g, e, s, seen, inferred=inferred)
         g.n_traces += 1
-        g.total_duration_us += root_dur
-        for sv in services:
+        g.total_duration_us += w.root_dur
+        for sv in w.services:
             g.svc_traces[sv] = g.svc_traces.get(sv, 0) + 1
         for e in seen:
             g.edges[e].traces += 1

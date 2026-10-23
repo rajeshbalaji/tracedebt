@@ -308,6 +308,44 @@ class Loading(unittest.TestCase):
         self.assertEqual((tr[0].db_name, tr[0].rpc_service), ("orders", "x.Svc"))
 
 
+class EvidenceTrace(unittest.TestCase):
+    def test_trace_split_across_windows_is_reassembled_and_marked(self):
+        from tracedebt.evidence import find, render
+        first = [_otlp_line("t9", "1", "", "gw"), _otlp_line("t9", "2", "1", "web")]
+        second = [_otlp_line("t9", "3", "2", "web", [("db.name", "stock")]),
+                  _otlp_line("other", "8", "", "gw")]
+        with tempfile.TemporaryDirectory() as d:
+            paths = []
+            for n, lines in (("w0.jsonl", first), ("w1.jsonl", second)):
+                p = os.path.join(d, n)
+                with open(p, "w") as fh:
+                    fh.write("\n".join(json.dumps(x) for x in lines) + "\n")
+                paths.append(p)
+            tr, src = find("t9", paths)
+            self.assertEqual((len(tr), len(src)), (3, 2))
+            out = render(tr, SPEC, path_only=True, sources=src)
+            marked = [ln for ln in out if "<==" in ln]
+            self.assertEqual(len(marked), 1)
+            self.assertIn("FOREIGN_DATA", marked[0])
+            self.assertIn("web -> db:stock", marked[0])
+            self.assertEqual(find("nope", paths), (None, []))
+
+
+class CommandLine(unittest.TestCase):
+    def test_wildcards_are_expanded_by_the_tool_and_missing_files_are_reported(self):
+        from tracedebt.cli import _expand
+        with tempfile.TemporaryDirectory() as d:
+            for n in ("w2.json", "w10.json", "w1.json", "x.txt"):
+                open(os.path.join(d, n), "w").close()
+            got = [os.path.basename(x) for x in _expand([os.path.join(d, "w*.json")])]
+            self.assertEqual(got, ["w1.json", "w10.json", "w2.json"])
+            self.assertEqual(_expand([os.path.join(d, "x.txt")]), [os.path.join(d, "x.txt")])
+            with self.assertRaises(SystemExit):
+                _expand([os.path.join(d, "none*.json")])
+            with self.assertRaises(SystemExit):
+                _expand([os.path.join(d, "missing.json")])
+
+
 class Evolution(unittest.TestCase):
     """An approved dependency: no finding when the spec is updated with the change,
     and an open finding closes once the spec catches up."""

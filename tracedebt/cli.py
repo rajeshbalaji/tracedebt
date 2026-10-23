@@ -2,6 +2,7 @@
 
     tracedebt init w1.json w2.json ... [--out spec.draft.yaml]
               [--ignore-service mesh-probe] [--ignore-op /health]
+    tracedebt trace <trace-id> w1.json ... [--spec spec.yaml] [--path]
     tracedebt analyze spec.yaml w1.json w2.json ... [--k 3 --m 4]
               [--min-traces 1] [--state state.json] [--md report.md] [--json report.json]
               [--dot drift.dot] [--fail-on 4]
@@ -61,6 +62,12 @@ def main(argv=None) -> int:
                    help="draw only drifted edges and their immediate context")
     a.add_argument("--fail-on", type=int, default=0,
                    help="exit 1 if an active finding has severity >= N")
+    t = sub.add_parser("trace", help="show the evidence trace behind a finding")
+    t.add_argument("trace_id")
+    t.add_argument("windows", nargs="+")
+    t.add_argument("--spec", help="mark the spans that break this specification")
+    t.add_argument("--path", action="store_true",
+                   help="show only the call path that leads to each marked span")
     i = sub.add_parser("init", help="draft a spec from baseline trace windows")
     i.add_argument("windows", nargs="+")
     i.add_argument("--out")
@@ -71,6 +78,17 @@ def main(argv=None) -> int:
     i.add_argument("--ignore-op", action="append", default=[])
     args = p.parse_args(argv)
     args.windows = _expand(args.windows)
+
+    if args.cmd == "trace":
+        from .evidence import find, render
+        tr, src = find(args.trace_id, args.windows)
+        if tr is None:
+            print(f"tracedebt: trace {args.trace_id} not found in {len(args.windows)} file(s)",
+                  file=sys.stderr)
+            return 1
+        spec = Spec.load(args.spec) if args.spec else None
+        sys.stdout.write("\n".join(render(tr, spec, args.path, src)) + "\n")
+        return 0
 
     if args.cmd == "init":
         import yaml
