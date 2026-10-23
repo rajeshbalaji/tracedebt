@@ -1,0 +1,10 @@
+digraph tracedebt {
+  rankdir=TB; nodesep=0.35; ranksep=0.4; fontsize=19; node [shape=box, fontsize=19, margin="0.08,0.04", height=0.38]; edge [arrowsize=0.8];
+  subgraph "cluster_domain" { label="domain"; "cartservice"; "emailservice"; "productcatalogservice"; "recommendationservice"; }
+  subgraph "cluster_data" { label="data"; "db:redis-cart" [shape=cylinder]; }
+  "cartservice" -> "db:redis-cart" [color=gray60];
+  "emailservice" -> "productcatalogservice" [color=red, penwidth=2, fontcolor=red, fontsize=17, label="UNDECLARED_XCTX"];
+  "productcatalogservice" -> "recommendationservice" [color=red, penwidth=2, fontcolor=red, fontsize=17, label="CYCLE"];
+  "recommendationservice" -> "db:redis-cart" [color=red, penwidth=2, fontcolor=red, fontsize=17, label="FOREIGN_DATA"];
+  "recommendationservice" -> "productcatalogservice" [color=gray60];
+}

@@ -1,0 +1,54 @@
+From 7af742112fc7c5c38e2ebc1b9921604664a73190 Mon Sep 17 00:00:00 2001
+From: TraceDebt case study <casestudy@example.org>
+Date: Thu, 22 Oct 2026 07:19:49 -0700
+Subject: [PATCH 5/5] Revert "recommendationservice: hide products already in
+ the user's cart (reads redis-cart directly)"
+
+This reverts commit c45cfa5086bbcbd50bf3afa707d88ab988836ccf.
+---
+ .../recommendation_server.py                     | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
+
+diff --git a/src/recommendationservice/recommendation_server.py b/src/recommendationservice/recommendation_server.py
+index defb9edc..7a8da7da 100755
+--- a/src/recommendationservice/recommendation_server.py
++++ b/src/recommendationservice/recommendation_server.py
+@@ -66,24 +66,13 @@ def initStackdriverProfiling():
+   #       logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
+   return
+ 
+-# Skip products the user already has in the cart. Reading the cart store
+-# directly is quicker than another gRPC hop through cartservice.
+-cart_store = None
+-if os.environ.get("CART_REDIS_ADDR"):
+-    import redis
+-    _h, _p = os.environ["CART_REDIS_ADDR"].split(":")
+-    cart_store = redis.Redis(host=_h, port=int(_p))
+-
+ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
+     def ListRecommendations(self, request, context):
+         max_responses = 5
+         # fetch list of products from product catalog stub
+         cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
+         product_ids = [x.id for x in cat_response.products]
+-        in_cart = set()
+-        if cart_store is not None and request.user_id:
+-            in_cart = {k.decode() for k in cart_store.hkeys("cart:" + request.user_id)}
+-        filtered_products = list(set(product_ids)-set(request.product_ids)-in_cart)
++        filtered_products = list(set(product_ids)-set(request.product_ids))
+         num_products = len(filtered_products)
+         num_return = min(max_responses, num_products)
+         # sample list of indicies to return
+@@ -122,9 +111,6 @@ if __name__ == "__main__":
+       grpc_client_instrumentor.instrument()
+       grpc_server_instrumentor = GrpcInstrumentorServer()
+       grpc_server_instrumentor.instrument()
+-      if cart_store is not None:
+-        from opentelemetry.instrumentation.redis import RedisInstrumentor
+-        RedisInstrumentor().instrument()
+       if os.environ["ENABLE_TRACING"] == "1":
+         trace.set_tracer_provider(TracerProvider())
+         otel_endpoint = os.getenv("COLLECTOR_SERVICE_ADDR", "localhost:4317")
+-- 
+2.43.0
+

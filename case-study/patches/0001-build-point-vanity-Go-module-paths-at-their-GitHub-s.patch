@@ -1,0 +1,575 @@
+From 23f5b0ae2af39d2db81789508be9ad6ca08c2b51 Mon Sep 17 00:00:00 2001
+From: TraceDebt case study <casestudy@example.org>
+Date: Thu, 22 Oct 2026 07:19:08 -0700
+Subject: [PATCH 1/5] build: point vanity Go module paths at their GitHub
+ sources (no module proxy in this environment)
+
+---
+ src/checkoutservice/go.mod       | 31 ++++++++++++++
+ src/checkoutservice/go.sum       | 56 +++++++++++++++++++++++++
+ src/frontend/go.mod              | 31 ++++++++++++++
+ src/frontend/go.sum              | 56 +++++++++++++++++++++++++
+ src/productcatalogservice/go.mod | 41 ++++++++++++++++++
+ src/productcatalogservice/go.sum | 72 ++++++++++++++++++++++++++++++++
+ src/shippingservice/go.mod       | 27 ++++++++++++
+ src/shippingservice/go.sum       | 48 +++++++++++++++++++++
+ 8 files changed, 362 insertions(+)
+
+diff --git a/src/checkoutservice/go.mod b/src/checkoutservice/go.mod
+index f49938f0..60851695 100644
+--- a/src/checkoutservice/go.mod
++++ b/src/checkoutservice/go.mod
+@@ -50,3 +50,34 @@ require (
+ 	google.golang.org/genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 // indirect
+ 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 // indirect
+ )
++
++// gh-replace begin
++replace cloud.google.com/go/profiler => github.com/googleapis/google-cloud-go/profiler v0.6.0
++replace go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0
++replace go.opentelemetry.io/otel => github.com/open-telemetry/opentelemetry-go v1.46.0
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0
++replace go.opentelemetry.io/otel/sdk => github.com/open-telemetry/opentelemetry-go/sdk v1.46.0
++replace google.golang.org/grpc => github.com/grpc/grpc-go v1.83.2
++replace google.golang.org/protobuf => github.com/protocolbuffers/protobuf-go v1.36.12
++replace cloud.google.com/go => github.com/googleapis/google-cloud-go v0.123.0
++replace cloud.google.com/go/auth => github.com/googleapis/google-cloud-go/auth v0.19.0
++replace cloud.google.com/go/auth/oauth2adapt => github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8
++replace cloud.google.com/go/compute/metadata => github.com/googleapis/google-cloud-go/compute/metadata v0.9.0
++replace go.opentelemetry.io/auto/sdk => github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1
++replace go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0
++replace go.opentelemetry.io/otel/metric => github.com/open-telemetry/opentelemetry-go/metric v1.46.0
++replace go.opentelemetry.io/otel/trace => github.com/open-telemetry/opentelemetry-go/trace v1.46.0
++replace go.opentelemetry.io/proto/otlp => github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0
++replace golang.org/x/crypto => github.com/golang/crypto v0.55.0
++replace golang.org/x/net => github.com/golang/net v0.58.0
++replace golang.org/x/oauth2 => github.com/golang/oauth2 v0.36.0
++replace golang.org/x/sync => github.com/golang/sync v0.22.0
++replace golang.org/x/sys => github.com/golang/sys v0.47.0
++replace golang.org/x/text => github.com/golang/text v0.41.0
++replace golang.org/x/time => github.com/golang/time v0.15.0
++replace google.golang.org/api => github.com/googleapis/google-api-go-client v0.274.0
++replace google.golang.org/genproto => github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7
++replace google.golang.org/genproto/googleapis/api => github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688
++replace google.golang.org/genproto/googleapis/rpc => github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5
++// gh-replace end
+diff --git a/src/checkoutservice/go.sum b/src/checkoutservice/go.sum
+index 89edc3e6..5fc84b2c 100644
+--- a/src/checkoutservice/go.sum
++++ b/src/checkoutservice/go.sum
+@@ -52,10 +52,24 @@ github.com/go-logr/logr v1.4.4 h1:tG4xh9yMsRCAiodLVTxyrkzSZ9+o0L1Kg/+cPVcbP/8=
+ github.com/go-logr/logr v1.4.4/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
+ github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=
+ github.com/go-logr/stdr v1.2.2/go.mod h1:mMo/vtBO5dYbehREoey6XUKy/eSumjCCveDpRre4VKE=
++github.com/golang/crypto v0.55.0 h1:hkCEGqiXhJBgBgdeQV7onqFaVpsH9j57volkdrSv2Uk=
++github.com/golang/crypto v0.55.0/go.mod h1:uq0V9dE/fzQuJtbnL+2EhWOE63vo164FY8xqEnV9xis=
+ github.com/golang/mock v1.7.0-rc.1 h1:YojYx61/OLFsiv6Rw1Z96LpldJIy31o+UHmwAUMJ6/U=
+ github.com/golang/mock v1.7.0-rc.1/go.mod h1:s42URUywIqd+OcERslBJvOjepvNymP31m3q8d/GkuRs=
++github.com/golang/net v0.58.0 h1:iuWR15RnYPkh6QgIxqhG3xvajpuur+zjsasJT+UvnHA=
++github.com/golang/net v0.58.0/go.mod h1:YwCddHnFlT7eLQqVprV19OnhLGtc5xOKgE0RyqgfWAU=
++github.com/golang/oauth2 v0.36.0 h1:DxeUXjOm/bmiBFbF/LAQZ99F+OzJ3Zi1HYo+t3uWcFs=
++github.com/golang/oauth2 v0.36.0/go.mod h1:YDBUJMTkDnJS+A4BP4eZBjCqtokkg1hODuPjwiGPO7Q=
+ github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+ github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
++github.com/golang/sync v0.22.0 h1:YaiU0SYUMzJf8o70POw0+IQS5u98tc4yVjTePVNym0c=
++github.com/golang/sync v0.22.0/go.mod h1:9xrNwdLfx4jkKbNva9FpL6vEN7evnE43NNNJQ2LF3+0=
++github.com/golang/sys v0.47.0 h1:1jm/D3zEaYYIIfaR1taNE0kRF5pMQjA0OR65ksYE/8c=
++github.com/golang/sys v0.47.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
++github.com/golang/text v0.41.0 h1:tqzApy6xogkIr50mkw3t6GQb9V9fu11iSkegsyhCoCA=
++github.com/golang/text v0.41.0/go.mod h1:jvf1O8ajNzZqhSrQBPbutR/EB83Cc0CFrezNQIwbb5M=
++github.com/golang/time v0.15.0 h1:aFbqL+W1NimVJlTP7D1nhQk4D0cHjWjI+TEvfmHRu4U=
++github.com/golang/time v0.15.0/go.mod h1:Y4YMaQmXwGQZoFaVFk4YpCt4FLQMYKZe9oeV/f4MSno=
+ github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
+ github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+ github.com/google/pprof v0.0.0-20251114195745-4902fdda35c8 h1:3DsUAV+VNEQa2CUVLxCY3f87278uWfIDhJnbdvDjvmE=
+@@ -74,18 +88,60 @@ github.com/googleapis/gax-go/v2 v2.15.0 h1:SyjDc1mGgZU5LncH8gimWo9lW1DtIfPibOG81
+ github.com/googleapis/gax-go/v2 v2.15.0/go.mod h1:zVVkkxAQHa1RQpg9z2AUCMnKhi0Qld9rcmyfL1OZhoc=
+ github.com/googleapis/gax-go/v2 v2.21.0 h1:h45NjjzEO3faG9Lg/cFrBh2PgegVVgzqKzuZl/wMbiI=
+ github.com/googleapis/gax-go/v2 v2.21.0/go.mod h1:But/NJU6TnZsrLai/xBAQLLz+Hc7fHZJt/hsCz3Fih4=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7 h1:No60E+AuMgwZAA4Z1kz97NMT0szGvyFEBoN/DNbF1wo=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7/go.mod h1:L43LFes82YgSonw6iTXTxXUX1OlULt4AQtkik4ULL/I=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 h1:vVBjmsLbY2+6eoNfNLU2pLyVhS1wpZgkIXNbRdNu4ok=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688/go.mod h1:1RJ9BQGyNdZwkGc1eTqkErfRZ6RJyYPHZo73BZ1vQqI=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 h1:SLL9TYT1WpmyEn2S5MF1A9x1cVv05rnSSWYzRKBoO7s=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5/go.mod h1:DjtHYE8FKJLivXcBEjGwndXfIC23G0VpXiXKqG179uA=
++github.com/googleapis/google-api-go-client v0.274.0 h1:mevxgoxdRt/do/a921FNM+5T+xyIyCjoNql9kyc2aV4=
++github.com/googleapis/google-api-go-client v0.274.0/go.mod h1:JbAt7mF+XVmWu6xNP8/+CTiGH30ofmCmk9nM8d8fHew=
++github.com/googleapis/google-cloud-go v0.123.0 h1:gzhBxou7jcT666DAblqvBGsbqpF0m1UrSsMBmuXgrfI=
++github.com/googleapis/google-cloud-go v0.123.0/go.mod h1:xBoMV08QcqUGuPW65Qfm1o9Y4zKZBpGS+7bImXLTAZU=
++github.com/googleapis/google-cloud-go/auth v0.19.0 h1:rHI9c8Y2S+5yVDb/8AC7+/9hZ0JYqwKY7EGqRud5I+Y=
++github.com/googleapis/google-cloud-go/auth v0.19.0/go.mod h1:2Aph7BT2KnaSFOM0JDPyiYgNh6PL9vGMiP8CUIXZ+IY=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8 h1:NeigwMtFglem/dPwS4Tpa4CEbQ7Vty+9Vmxh4rSTKrA=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0 h1:NRt+ReYkqbTPWOBupWwAyhSUYIoqrkfWV1VKDP7vOIc=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
++github.com/googleapis/google-cloud-go/profiler v0.6.0 h1:dedBi7baVIENIfBAPt/9aGq84SwuPdXmKwo4AoZE0Rs=
++github.com/googleapis/google-cloud-go/profiler v0.6.0/go.mod h1:cJV7Qfj0o9PAC7q/xQTkM6qn2FO9So3TFk4P5O5yLis=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 h1:HWRh5R2+9EifMyIHV7ZV+MIZqgz+PMpZ14Jynv3O2Zs=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0/go.mod h1:JfhWUomR1baixubs02l85lZYYOm7LV6om4ceouMv45c=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 h1:5VipnvEpbqr2gA2VbM+nYVbkIF28c5ZQfqCBQ5g2xfk=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0/go.mod h1:Hyl3n6Twe1hvtd9XUXDec4pTvgMSEixRuQKPTMH2bNs=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 h1:/Tnpcb2E0Pz/tN9s3bfEY2Q8ePCEX9iuS+cneUwncnw=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0/go.mod h1:zOBXOsUaBSjKgmH4OGzV1esUpR3oUSCPYVd2cUBjKYY=
++github.com/grpc/grpc-go v1.83.2 h1:qOXaejd5Fv0FpejsSX6sANRSqxgzWaUo7IE40qnJ/nQ=
++github.com/grpc/grpc-go v1.83.2/go.mod h1:YPI1hK3kDked6iHvgX3tR0y+nX/qpMFKhPgFsokw1S8=
++github.com/open-telemetry/opentelemetry-go v1.46.0 h1:8xYBKjf4FZuY6il/cEK4dwhLY4vx0F1tDcN6bwJxM8I=
++github.com/open-telemetry/opentelemetry-go v1.46.0/go.mod h1:Gj3SEScelsNC45tp4nSxRYlS+f5iez7W8XPMCt905kE=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0 h1:7iluuibFgRZ/nFDOuFatDgfWa/Hwnv1KCMQgQ9jncbk=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0/go.mod h1:dylvB+ZiiwMvsDij9O84Uy7SijLgHMX4mbkncds+4Sw=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0 h1:suf2dOBqB9O7P8XFxYgjDprykDtB4cN/IMrbVvBbLmM=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0/go.mod h1:085m8qbm4hgc8rZWGDEa4vmyyo2c3nPxUslYUKUIU04=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1 h1:JWC1GDOcmalGjqPMgf8gJFo7HrToUBytZiBhpGx823o=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0 h1:iVSpIyPeZ9CWceLiEwb3k5sziFFRChyI9GM8xZMW5Eo=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0/go.mod h1:716wFneO0ov19A2beH5hjfh9AK5z/VWNAtDijp1Y0/g=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0 h1:DfTmcdnGEf4zFWStHHApugXw9SHZW6p/1izQLrU6rJw=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0/go.mod h1:BOmGMCbAtvcJiSJ+hLuhgPLdDbimnraSl8irz3iY8sY=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0 h1:3n2+5681J4Dh6yAofRHJXSA1p1OFR1C89UdImSMWnEA=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0/go.mod h1:iPmdWqifKUdzziPkvvzIJXITl56fQx2mGM/DHLB3/2o=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0 h1:fTZ/QcnOwWCFk9AGcpY1DMkgLw241NJZd7IgJpKAQ08=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0/go.mod h1:GAERFXFt5SYCEB+YiKUbMBeza6UaDH7GmGOZEfh2gSM=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0 h1:VsHJD1WP2wPga1MYKopUXtaVtk4mBw3TK8OpbQmbrAs=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0/go.mod h1:J7GAXweO77XSFkB/rmAqk9D6ihszhFjLU+d9WuUxDLI=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0 h1:Xlv4xLQaDiN3cYVOPDezq3qrQBhUW3nzEJKs4Swqg8k=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0/go.mod h1:SmVizdCOAm3XBtG1g1NnOdhW6jtddT72hLMhv8VwA8E=
+ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 h1:GFCKgmp0tecUJ0sJuv4pzYCqS9+RGSn52M3FUwPs+uo=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10/go.mod h1:t/avpk3KcrXxUnYOhZhMXJlSEyie6gQbtLq5NM3loB8=
+ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
++github.com/protocolbuffers/protobuf-go v1.36.12 h1:riDdLaUsOq24v5KFhYr+hnMJmsHr88g+R0VHrrob7wk=
++github.com/protocolbuffers/protobuf-go v1.36.12/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
+ github.com/sirupsen/logrus v1.9.4 h1:TsZE7l11zFCLZnZ+teH4Umoq5BhEIfIzfRDZ1Uzql2w=
+ github.com/sirupsen/logrus v1.9.4/go.mod h1:ftWc9WdOfJ0a92nsE2jF5u5ZwH8Bv2zdeOC42RjbV2g=
+ github.com/sirupsen/logrus v1.10.0 h1:T8MxJJXVZkfcC5zSRMRAg2F8+lxjmUCGGWPzFxO+Msc=
+diff --git a/src/frontend/go.mod b/src/frontend/go.mod
+index ffb564b5..63433d07 100644
+--- a/src/frontend/go.mod
++++ b/src/frontend/go.mod
+@@ -56,3 +56,34 @@ require (
+ 	google.golang.org/genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 // indirect
+ 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 // indirect
+ )
++
++// gh-replace begin
++replace cloud.google.com/go/compute/metadata => github.com/googleapis/google-cloud-go/compute/metadata v0.9.0
++replace cloud.google.com/go/profiler => github.com/googleapis/google-cloud-go/profiler v0.6.0
++replace go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0
++replace go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.71.0
++replace go.opentelemetry.io/otel => github.com/open-telemetry/opentelemetry-go v1.46.0
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0
++replace go.opentelemetry.io/otel/sdk => github.com/open-telemetry/opentelemetry-go/sdk v1.46.0
++replace google.golang.org/grpc => github.com/grpc/grpc-go v1.83.2
++replace google.golang.org/protobuf => github.com/protocolbuffers/protobuf-go v1.36.12
++replace cloud.google.com/go => github.com/googleapis/google-cloud-go v0.123.0
++replace cloud.google.com/go/auth => github.com/googleapis/google-cloud-go/auth v0.19.0
++replace cloud.google.com/go/auth/oauth2adapt => github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8
++replace go.opentelemetry.io/auto/sdk => github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0
++replace go.opentelemetry.io/otel/metric => github.com/open-telemetry/opentelemetry-go/metric v1.46.0
++replace go.opentelemetry.io/otel/trace => github.com/open-telemetry/opentelemetry-go/trace v1.46.0
++replace go.opentelemetry.io/proto/otlp => github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0
++replace golang.org/x/crypto => github.com/golang/crypto v0.55.0
++replace golang.org/x/net => github.com/golang/net v0.58.0
++replace golang.org/x/oauth2 => github.com/golang/oauth2 v0.36.0
++replace golang.org/x/sync => github.com/golang/sync v0.22.0
++replace golang.org/x/sys => github.com/golang/sys v0.47.0
++replace golang.org/x/text => github.com/golang/text v0.41.0
++replace golang.org/x/time => github.com/golang/time v0.15.0
++replace google.golang.org/api => github.com/googleapis/google-api-go-client v0.274.0
++replace google.golang.org/genproto => github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7
++replace google.golang.org/genproto/googleapis/api => github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688
++replace google.golang.org/genproto/googleapis/rpc => github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5
++// gh-replace end
+diff --git a/src/frontend/go.sum b/src/frontend/go.sum
+index 6143ea94..c474cad2 100644
+--- a/src/frontend/go.sum
++++ b/src/frontend/go.sum
+@@ -70,10 +70,24 @@ github.com/go-playground/validator/v10 v10.30.3 h1:4MU6YkEwx7GbcPJOZxrtbu+QfF3pJ
+ github.com/go-playground/validator/v10 v10.30.3/go.mod h1:4Axh7oCNGcoGkqLoE4YWt6n20mcEIsPRlB7vPk3lpyc=
+ github.com/go-playground/validator/v10 v10.30.4 h1:9Rcod2ZPO6mOEG6b4GqyoHE/H6//Ze0RuhOo1hT1x0w=
+ github.com/go-playground/validator/v10 v10.30.4/go.mod h1:numpT+RPLE91R9oYWMY/R9zRgJBewr3IXHko4OISPpk=
++github.com/golang/crypto v0.55.0 h1:hkCEGqiXhJBgBgdeQV7onqFaVpsH9j57volkdrSv2Uk=
++github.com/golang/crypto v0.55.0/go.mod h1:uq0V9dE/fzQuJtbnL+2EhWOE63vo164FY8xqEnV9xis=
+ github.com/golang/mock v1.7.0-rc.1 h1:YojYx61/OLFsiv6Rw1Z96LpldJIy31o+UHmwAUMJ6/U=
+ github.com/golang/mock v1.7.0-rc.1/go.mod h1:s42URUywIqd+OcERslBJvOjepvNymP31m3q8d/GkuRs=
++github.com/golang/net v0.58.0 h1:iuWR15RnYPkh6QgIxqhG3xvajpuur+zjsasJT+UvnHA=
++github.com/golang/net v0.58.0/go.mod h1:YwCddHnFlT7eLQqVprV19OnhLGtc5xOKgE0RyqgfWAU=
++github.com/golang/oauth2 v0.36.0 h1:DxeUXjOm/bmiBFbF/LAQZ99F+OzJ3Zi1HYo+t3uWcFs=
++github.com/golang/oauth2 v0.36.0/go.mod h1:YDBUJMTkDnJS+A4BP4eZBjCqtokkg1hODuPjwiGPO7Q=
+ github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+ github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
++github.com/golang/sync v0.22.0 h1:YaiU0SYUMzJf8o70POw0+IQS5u98tc4yVjTePVNym0c=
++github.com/golang/sync v0.22.0/go.mod h1:9xrNwdLfx4jkKbNva9FpL6vEN7evnE43NNNJQ2LF3+0=
++github.com/golang/sys v0.47.0 h1:1jm/D3zEaYYIIfaR1taNE0kRF5pMQjA0OR65ksYE/8c=
++github.com/golang/sys v0.47.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
++github.com/golang/text v0.41.0 h1:tqzApy6xogkIr50mkw3t6GQb9V9fu11iSkegsyhCoCA=
++github.com/golang/text v0.41.0/go.mod h1:jvf1O8ajNzZqhSrQBPbutR/EB83Cc0CFrezNQIwbb5M=
++github.com/golang/time v0.15.0 h1:aFbqL+W1NimVJlTP7D1nhQk4D0cHjWjI+TEvfmHRu4U=
++github.com/golang/time v0.15.0/go.mod h1:Y4YMaQmXwGQZoFaVFk4YpCt4FLQMYKZe9oeV/f4MSno=
+ github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
+ github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+ github.com/google/pprof v0.0.0-20251114195745-4902fdda35c8 h1:3DsUAV+VNEQa2CUVLxCY3f87278uWfIDhJnbdvDjvmE=
+@@ -92,6 +106,24 @@ github.com/googleapis/gax-go/v2 v2.15.0 h1:SyjDc1mGgZU5LncH8gimWo9lW1DtIfPibOG81
+ github.com/googleapis/gax-go/v2 v2.15.0/go.mod h1:zVVkkxAQHa1RQpg9z2AUCMnKhi0Qld9rcmyfL1OZhoc=
+ github.com/googleapis/gax-go/v2 v2.21.0 h1:h45NjjzEO3faG9Lg/cFrBh2PgegVVgzqKzuZl/wMbiI=
+ github.com/googleapis/gax-go/v2 v2.21.0/go.mod h1:But/NJU6TnZsrLai/xBAQLLz+Hc7fHZJt/hsCz3Fih4=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7 h1:No60E+AuMgwZAA4Z1kz97NMT0szGvyFEBoN/DNbF1wo=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7/go.mod h1:L43LFes82YgSonw6iTXTxXUX1OlULt4AQtkik4ULL/I=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 h1:vVBjmsLbY2+6eoNfNLU2pLyVhS1wpZgkIXNbRdNu4ok=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688/go.mod h1:1RJ9BQGyNdZwkGc1eTqkErfRZ6RJyYPHZo73BZ1vQqI=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 h1:SLL9TYT1WpmyEn2S5MF1A9x1cVv05rnSSWYzRKBoO7s=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5/go.mod h1:DjtHYE8FKJLivXcBEjGwndXfIC23G0VpXiXKqG179uA=
++github.com/googleapis/google-api-go-client v0.274.0 h1:mevxgoxdRt/do/a921FNM+5T+xyIyCjoNql9kyc2aV4=
++github.com/googleapis/google-api-go-client v0.274.0/go.mod h1:JbAt7mF+XVmWu6xNP8/+CTiGH30ofmCmk9nM8d8fHew=
++github.com/googleapis/google-cloud-go v0.123.0 h1:gzhBxou7jcT666DAblqvBGsbqpF0m1UrSsMBmuXgrfI=
++github.com/googleapis/google-cloud-go v0.123.0/go.mod h1:xBoMV08QcqUGuPW65Qfm1o9Y4zKZBpGS+7bImXLTAZU=
++github.com/googleapis/google-cloud-go/auth v0.19.0 h1:rHI9c8Y2S+5yVDb/8AC7+/9hZ0JYqwKY7EGqRud5I+Y=
++github.com/googleapis/google-cloud-go/auth v0.19.0/go.mod h1:2Aph7BT2KnaSFOM0JDPyiYgNh6PL9vGMiP8CUIXZ+IY=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8 h1:NeigwMtFglem/dPwS4Tpa4CEbQ7Vty+9Vmxh4rSTKrA=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0 h1:NRt+ReYkqbTPWOBupWwAyhSUYIoqrkfWV1VKDP7vOIc=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
++github.com/googleapis/google-cloud-go/profiler v0.6.0 h1:dedBi7baVIENIfBAPt/9aGq84SwuPdXmKwo4AoZE0Rs=
++github.com/googleapis/google-cloud-go/profiler v0.6.0/go.mod h1:cJV7Qfj0o9PAC7q/xQTkM6qn2FO9So3TFk4P5O5yLis=
+ github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
+ github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 h1:HWRh5R2+9EifMyIHV7ZV+MIZqgz+PMpZ14Jynv3O2Zs=
+@@ -100,16 +132,40 @@ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 h1:5VipnvEpbqr2gA2VbM+nYVbkIF2
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0/go.mod h1:Hyl3n6Twe1hvtd9XUXDec4pTvgMSEixRuQKPTMH2bNs=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 h1:/Tnpcb2E0Pz/tN9s3bfEY2Q8ePCEX9iuS+cneUwncnw=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0/go.mod h1:zOBXOsUaBSjKgmH4OGzV1esUpR3oUSCPYVd2cUBjKYY=
++github.com/grpc/grpc-go v1.83.2 h1:qOXaejd5Fv0FpejsSX6sANRSqxgzWaUo7IE40qnJ/nQ=
++github.com/grpc/grpc-go v1.83.2/go.mod h1:YPI1hK3kDked6iHvgX3tR0y+nX/qpMFKhPgFsokw1S8=
+ github.com/leodido/go-urn v1.4.0 h1:WT9HwE9SGECu3lg4d/dIA+jxlljEa1/ffXKmRjqdmIQ=
+ github.com/leodido/go-urn v1.4.0/go.mod h1:bvxc+MVxLKB4z00jd1z+Dvzr47oO32F/QSNjSBOlFxI=
+ github.com/leodido/go-urn v1.5.0 h1:pLqT2kq1zpHW/1D18QMjMpdtX7cekxqtJJjg5ANyWw0=
+ github.com/leodido/go-urn v1.5.0/go.mod h1:9BORnCDhdPBJNDEX+w1bJisa8yOKYi116VeO96s4ifE=
++github.com/open-telemetry/opentelemetry-go v1.46.0 h1:8xYBKjf4FZuY6il/cEK4dwhLY4vx0F1tDcN6bwJxM8I=
++github.com/open-telemetry/opentelemetry-go v1.46.0/go.mod h1:Gj3SEScelsNC45tp4nSxRYlS+f5iez7W8XPMCt905kE=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0 h1:7iluuibFgRZ/nFDOuFatDgfWa/Hwnv1KCMQgQ9jncbk=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0/go.mod h1:dylvB+ZiiwMvsDij9O84Uy7SijLgHMX4mbkncds+4Sw=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.71.0 h1:Wv6uy62wYzMQZeA3s3c7ZTEiDYqgxi3omsdLStEllcs=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.71.0/go.mod h1:Ef8SuTh59BT7+ofpDxN9z+yOlc4t2GjLmKDgYNJL/NU=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1 h1:JWC1GDOcmalGjqPMgf8gJFo7HrToUBytZiBhpGx823o=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0 h1:iVSpIyPeZ9CWceLiEwb3k5sziFFRChyI9GM8xZMW5Eo=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0/go.mod h1:716wFneO0ov19A2beH5hjfh9AK5z/VWNAtDijp1Y0/g=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0 h1:DfTmcdnGEf4zFWStHHApugXw9SHZW6p/1izQLrU6rJw=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0/go.mod h1:BOmGMCbAtvcJiSJ+hLuhgPLdDbimnraSl8irz3iY8sY=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0 h1:3n2+5681J4Dh6yAofRHJXSA1p1OFR1C89UdImSMWnEA=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0/go.mod h1:iPmdWqifKUdzziPkvvzIJXITl56fQx2mGM/DHLB3/2o=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0 h1:fTZ/QcnOwWCFk9AGcpY1DMkgLw241NJZd7IgJpKAQ08=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0/go.mod h1:GAERFXFt5SYCEB+YiKUbMBeza6UaDH7GmGOZEfh2gSM=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0 h1:VsHJD1WP2wPga1MYKopUXtaVtk4mBw3TK8OpbQmbrAs=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0/go.mod h1:J7GAXweO77XSFkB/rmAqk9D6ihszhFjLU+d9WuUxDLI=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0 h1:Xlv4xLQaDiN3cYVOPDezq3qrQBhUW3nzEJKs4Swqg8k=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0/go.mod h1:SmVizdCOAm3XBtG1g1NnOdhW6jtddT72hLMhv8VwA8E=
+ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 h1:GFCKgmp0tecUJ0sJuv4pzYCqS9+RGSn52M3FUwPs+uo=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10/go.mod h1:t/avpk3KcrXxUnYOhZhMXJlSEyie6gQbtLq5NM3loB8=
+ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
+ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
++github.com/protocolbuffers/protobuf-go v1.36.12 h1:riDdLaUsOq24v5KFhYr+hnMJmsHr88g+R0VHrrob7wk=
++github.com/protocolbuffers/protobuf-go v1.36.12/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
+ github.com/sirupsen/logrus v1.9.4 h1:TsZE7l11zFCLZnZ+teH4Umoq5BhEIfIzfRDZ1Uzql2w=
+ github.com/sirupsen/logrus v1.9.4/go.mod h1:ftWc9WdOfJ0a92nsE2jF5u5ZwH8Bv2zdeOC42RjbV2g=
+ github.com/sirupsen/logrus v1.10.0 h1:T8MxJJXVZkfcC5zSRMRAg2F8+lxjmUCGGWPzFxO+Msc=
+diff --git a/src/productcatalogservice/go.mod b/src/productcatalogservice/go.mod
+index 069b4a40..82365ef1 100644
+--- a/src/productcatalogservice/go.mod
++++ b/src/productcatalogservice/go.mod
+@@ -66,3 +66,44 @@ require (
+ 	google.golang.org/genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 // indirect
+ 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 // indirect
+ )
++
++
++
++// gh-replace begin
++replace cloud.google.com/go/alloydbconn => github.com/GoogleCloudPlatform/alloydb-go-connector v1.19.1
++replace cloud.google.com/go/profiler => github.com/googleapis/google-cloud-go/profiler v0.6.0
++replace cloud.google.com/go/secretmanager => github.com/googleapis/google-cloud-go/secretmanager v1.21.0
++replace go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0
++replace go.opentelemetry.io/otel => github.com/open-telemetry/opentelemetry-go v1.46.0
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0
++replace go.opentelemetry.io/otel/sdk => github.com/open-telemetry/opentelemetry-go/sdk v1.46.0
++replace google.golang.org/grpc => github.com/grpc/grpc-go v1.83.2
++replace google.golang.org/protobuf => github.com/protocolbuffers/protobuf-go v1.36.12
++replace cloud.google.com/go => github.com/googleapis/google-cloud-go v0.123.0
++replace cloud.google.com/go/alloydb => github.com/googleapis/google-cloud-go/alloydb v1.26.0
++replace cloud.google.com/go/auth => github.com/googleapis/google-cloud-go/auth v0.20.0
++replace cloud.google.com/go/auth/oauth2adapt => github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8
++replace cloud.google.com/go/compute/metadata => github.com/googleapis/google-cloud-go/compute/metadata v0.9.0
++replace cloud.google.com/go/iam => github.com/googleapis/google-cloud-go/iam v1.11.0
++replace cloud.google.com/go/longrunning => github.com/googleapis/google-cloud-go/longrunning v0.9.0
++replace cloud.google.com/go/monitoring => github.com/googleapis/google-cloud-go/monitoring v1.29.0
++replace go.opentelemetry.io/auto/sdk => github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1
++replace go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0
++replace go.opentelemetry.io/otel/exporters/otlp/otlptrace => github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0
++replace go.opentelemetry.io/otel/metric => github.com/open-telemetry/opentelemetry-go/metric v1.46.0
++replace go.opentelemetry.io/otel/sdk/metric => github.com/open-telemetry/opentelemetry-go/sdk/metric v1.46.0
++replace go.opentelemetry.io/otel/trace => github.com/open-telemetry/opentelemetry-go/trace v1.46.0
++replace go.opentelemetry.io/proto/otlp => github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0
++replace golang.org/x/crypto => github.com/golang/crypto v0.55.0
++replace golang.org/x/net => github.com/golang/net v0.58.0
++replace golang.org/x/oauth2 => github.com/golang/oauth2 v0.36.0
++replace golang.org/x/sync => github.com/golang/sync v0.22.0
++replace golang.org/x/sys => github.com/golang/sys v0.47.0
++replace golang.org/x/text => github.com/golang/text v0.41.0
++replace golang.org/x/time => github.com/golang/time v0.15.0
++replace google.golang.org/api => github.com/googleapis/google-api-go-client v0.287.1
++replace google.golang.org/genproto => github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7
++replace google.golang.org/genproto/googleapis/api => github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688
++replace google.golang.org/genproto/googleapis/rpc => github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5
++replace go.opencensus.io => github.com/census-instrumentation/opencensus-go v0.24.0
++// gh-replace end
+diff --git a/src/productcatalogservice/go.sum b/src/productcatalogservice/go.sum
+index 58a224f1..46e9b9f2 100644
+--- a/src/productcatalogservice/go.sum
++++ b/src/productcatalogservice/go.sum
+@@ -40,6 +40,8 @@ cloud.google.com/go/storage v1.62.0/go.mod h1:T5hz3qzcpnxZ5LdKc7y8Tw7lh4v9zeeVyr
+ cloud.google.com/go/trace v1.11.7 h1:kDNDX8JkaAG3R2nq1lIdkb7FCSi1rCmsEtKVsty7p+U=
+ cloud.google.com/go/trace v1.11.7/go.mod h1:TNn9d5V3fQVf6s4SCveVMIBS2LJUqo73GACmq/Tky0s=
+ github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
++github.com/GoogleCloudPlatform/alloydb-go-connector v1.19.1 h1:ifpg8dMcqW+KEMrEo24PCppoiBTXHplHSGyfAsiqtDs=
++github.com/GoogleCloudPlatform/alloydb-go-connector v1.19.1/go.mod h1:sUQ98EeCuAu1rXbiqVHgg+ypOzBqrt4rXYQO3ELLzIc=
+ github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.32.0 h1:rIkQfkCOVKc1OiRCNcSDD8ml5RJlZbH/Xsq7lbpynwc=
+ github.com/GoogleCloudPlatform/opentelemetry-operations-go/detectors/gcp v1.32.0/go.mod h1:RD2SsorTmYhF6HkTmDw7KmPYQk8OBYwTkuasChwv7R4=
+ github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/metric v0.56.0 h1:O2sXMyJh8b7devAGdE+163xtRurt0RVpB6DIzX5vGfg=
+@@ -50,6 +52,8 @@ github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapp
+ github.com/GoogleCloudPlatform/opentelemetry-operations-go/internal/resourcemapping v0.56.0/go.mod h1:6ZZMQhZKDvUvkJw2rc+oDP90tMMzuU/J+5HG1ZmPOmE=
+ github.com/cenkalti/backoff/v5 v5.0.3 h1:ZN+IMa753KfX5hd8vVaMixjnqRZ3y8CuJKRKj1xcsSM=
+ github.com/cenkalti/backoff/v5 v5.0.3/go.mod h1:rkhZdG3JZukswDf7f0cwqPNk4K0sa+F97BxZthm/crw=
++github.com/census-instrumentation/opencensus-go v0.24.0 h1:8eUcvmgm8cmcuB/RCF4LtDVPdypOwuGrQAZ8OgHPv3s=
++github.com/census-instrumentation/opencensus-go v0.24.0/go.mod h1:vNK8G9p7aAivkbmorf4v+7Hgx+Zs0yY+0fOtgBfjQKo=
+ github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
+ github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
+ github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
+@@ -83,6 +87,8 @@ github.com/go-logr/logr v1.4.4 h1:tG4xh9yMsRCAiodLVTxyrkzSZ9+o0L1Kg/+cPVcbP/8=
+ github.com/go-logr/logr v1.4.4/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
+ github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=
+ github.com/go-logr/stdr v1.2.2/go.mod h1:mMo/vtBO5dYbehREoey6XUKy/eSumjCCveDpRre4VKE=
++github.com/golang/crypto v0.55.0 h1:hkCEGqiXhJBgBgdeQV7onqFaVpsH9j57volkdrSv2Uk=
++github.com/golang/crypto v0.55.0/go.mod h1:uq0V9dE/fzQuJtbnL+2EhWOE63vo164FY8xqEnV9xis=
+ github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
+ github.com/golang/groupcache v0.0.0-20200121045136-8c9f03a8e57e/go.mod h1:cIg4eruTrX1D+g88fzRXU5OdNfaM+9IcxsU14FzY7Hc=
+ github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8 h1:f+oWsMOmNPc8JmEHVZIycC7hBoQxHH9pNKQORJNozsQ=
+@@ -90,6 +96,10 @@ github.com/golang/groupcache v0.0.0-20241129210726-2c02b8208cf8/go.mod h1:wcDNUv
+ github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
+ github.com/golang/mock v1.7.0-rc.1 h1:YojYx61/OLFsiv6Rw1Z96LpldJIy31o+UHmwAUMJ6/U=
+ github.com/golang/mock v1.7.0-rc.1/go.mod h1:s42URUywIqd+OcERslBJvOjepvNymP31m3q8d/GkuRs=
++github.com/golang/net v0.58.0 h1:iuWR15RnYPkh6QgIxqhG3xvajpuur+zjsasJT+UvnHA=
++github.com/golang/net v0.58.0/go.mod h1:YwCddHnFlT7eLQqVprV19OnhLGtc5xOKgE0RyqgfWAU=
++github.com/golang/oauth2 v0.36.0 h1:DxeUXjOm/bmiBFbF/LAQZ99F+OzJ3Zi1HYo+t3uWcFs=
++github.com/golang/oauth2 v0.36.0/go.mod h1:YDBUJMTkDnJS+A4BP4eZBjCqtokkg1hODuPjwiGPO7Q=
+ github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+ github.com/golang/protobuf v1.3.2/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
+ github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
+@@ -101,6 +111,14 @@ github.com/golang/protobuf v1.4.1/go.mod h1:U8fpvMrcmy5pZrNK1lt4xCsGvpyWQ/VVv6QD
+ github.com/golang/protobuf v1.4.3/go.mod h1:oDoupMAO8OvCJWAcko0GGGIgR6R6ocIYbsSw735rRwI=
+ github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+ github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
++github.com/golang/sync v0.22.0 h1:YaiU0SYUMzJf8o70POw0+IQS5u98tc4yVjTePVNym0c=
++github.com/golang/sync v0.22.0/go.mod h1:9xrNwdLfx4jkKbNva9FpL6vEN7evnE43NNNJQ2LF3+0=
++github.com/golang/sys v0.47.0 h1:1jm/D3zEaYYIIfaR1taNE0kRF5pMQjA0OR65ksYE/8c=
++github.com/golang/sys v0.47.0/go.mod h1:4GL1E5IUh+htKOUEOaiffhrAeqysfVGipDYzABqnCmw=
++github.com/golang/text v0.41.0 h1:tqzApy6xogkIr50mkw3t6GQb9V9fu11iSkegsyhCoCA=
++github.com/golang/text v0.41.0/go.mod h1:jvf1O8ajNzZqhSrQBPbutR/EB83Cc0CFrezNQIwbb5M=
++github.com/golang/time v0.15.0 h1:aFbqL+W1NimVJlTP7D1nhQk4D0cHjWjI+TEvfmHRu4U=
++github.com/golang/time v0.15.0/go.mod h1:Y4YMaQmXwGQZoFaVFk4YpCt4FLQMYKZe9oeV/f4MSno=
+ github.com/google/go-cmp v0.2.0/go.mod h1:oXzfMopK8JAjlY9xF4vHSVASa0yLyX7SntLO5aqRK0M=
+ github.com/google/go-cmp v0.3.0/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
+ github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
+@@ -124,10 +142,40 @@ github.com/googleapis/gax-go/v2 v2.22.0 h1:PjIWBpgGIVKGoCXuiCoP64altEJCj3/Ei+kSU
+ github.com/googleapis/gax-go/v2 v2.22.0/go.mod h1:irWBbALSr0Sk3qlqb9SyJ1h68WjgeFuiOzI4Rqw5+aY=
+ github.com/googleapis/gax-go/v2 v2.23.0 h1:Tchl7qkvE7Ip3y+ztvNufYFvkfqTe7NfLTYGIdJRLuE=
+ github.com/googleapis/gax-go/v2 v2.23.0/go.mod h1:rBQKOVJCdb8IFEzg+FCwlt1LP/xMDGuqUXhUG+XMXEg=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7 h1:No60E+AuMgwZAA4Z1kz97NMT0szGvyFEBoN/DNbF1wo=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7/go.mod h1:L43LFes82YgSonw6iTXTxXUX1OlULt4AQtkik4ULL/I=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688 h1:vVBjmsLbY2+6eoNfNLU2pLyVhS1wpZgkIXNbRdNu4ok=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260819154853-08b0e4226688/go.mod h1:1RJ9BQGyNdZwkGc1eTqkErfRZ6RJyYPHZo73BZ1vQqI=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5 h1:SLL9TYT1WpmyEn2S5MF1A9x1cVv05rnSSWYzRKBoO7s=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260825221802-da73d73af1c5/go.mod h1:DjtHYE8FKJLivXcBEjGwndXfIC23G0VpXiXKqG179uA=
++github.com/googleapis/google-api-go-client v0.287.1 h1:x/MCn9sw8dP6IGCTamJT9rr748PNjdZ2WobHxf6NRQ0=
++github.com/googleapis/google-api-go-client v0.287.1/go.mod h1:lM2kYRzYUCBY91P9h6VF1PYmvhxii3O5hji37qRvIcY=
++github.com/googleapis/google-cloud-go v0.123.0 h1:gzhBxou7jcT666DAblqvBGsbqpF0m1UrSsMBmuXgrfI=
++github.com/googleapis/google-cloud-go v0.123.0/go.mod h1:xBoMV08QcqUGuPW65Qfm1o9Y4zKZBpGS+7bImXLTAZU=
++github.com/googleapis/google-cloud-go/alloydb v1.26.0 h1:nRBE+cItyMeLD5X7M3+6Q5dZttp4WkDFnL+NqmQ6XPY=
++github.com/googleapis/google-cloud-go/alloydb v1.26.0/go.mod h1:oqHGc/Xb5fWtH+wIDpu2wcPJX9oML/fGJuH/sp8ysyo=
++github.com/googleapis/google-cloud-go/auth v0.20.0 h1:LBV7wd7M0hz4tw1ujPD2M2BPjmmVeJE06XVyAjJjABI=
++github.com/googleapis/google-cloud-go/auth v0.20.0/go.mod h1:942/yi/itH1SsmpyrbnTMDgGfdy2BUqIKyd0cyYLc5Q=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8 h1:NeigwMtFglem/dPwS4Tpa4CEbQ7Vty+9Vmxh4rSTKrA=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0 h1:NRt+ReYkqbTPWOBupWwAyhSUYIoqrkfWV1VKDP7vOIc=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
++github.com/googleapis/google-cloud-go/iam v1.11.0 h1:/1UYg9rRE4HUVJd2RY27T5XHEfzN8/D8s0FScrBhCiQ=
++github.com/googleapis/google-cloud-go/iam v1.11.0/go.mod h1:KP+nKGugNJW4LcLx1uEZcq1ok5sQHFaQehQNl4QDgV4=
++github.com/googleapis/google-cloud-go/longrunning v0.9.0 h1:5Ixnwa2oL0Y6VmCYCRz2PzTB0LLSZko550Nhsg9Ifqw=
++github.com/googleapis/google-cloud-go/longrunning v0.9.0/go.mod h1:pkTz846W7bF4o2SzdWJ40Hu0Re+UoNT6Q5t+igIcb8E=
++github.com/googleapis/google-cloud-go/monitoring v1.29.0 h1:UhtqhOMAjS5eRiWZv2WXVeI6OypMCNspppCYtYaRAwc=
++github.com/googleapis/google-cloud-go/monitoring v1.29.0/go.mod h1:72NOVjJXHY/HBfoLT0+qlCZBT059+9VXLeAnL2PeeVM=
++github.com/googleapis/google-cloud-go/profiler v0.6.0 h1:dedBi7baVIENIfBAPt/9aGq84SwuPdXmKwo4AoZE0Rs=
++github.com/googleapis/google-cloud-go/profiler v0.6.0/go.mod h1:cJV7Qfj0o9PAC7q/xQTkM6qn2FO9So3TFk4P5O5yLis=
++github.com/googleapis/google-cloud-go/secretmanager v1.21.0 h1:nTOsv8uoKOvCQka4/FhodWxOJXgp4yw/BPFhMlUR6mI=
++github.com/googleapis/google-cloud-go/secretmanager v1.21.0/go.mod h1:+nlV+GYqTD8DM+x7Kk3UF7ZPYgdYMowrkZxAmMXORQ8=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 h1:5VipnvEpbqr2gA2VbM+nYVbkIF28c5ZQfqCBQ5g2xfk=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0/go.mod h1:Hyl3n6Twe1hvtd9XUXDec4pTvgMSEixRuQKPTMH2bNs=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0 h1:/Tnpcb2E0Pz/tN9s3bfEY2Q8ePCEX9iuS+cneUwncnw=
+ github.com/grpc-ecosystem/grpc-gateway/v2 v2.30.0/go.mod h1:zOBXOsUaBSjKgmH4OGzV1esUpR3oUSCPYVd2cUBjKYY=
++github.com/grpc/grpc-go v1.83.2 h1:qOXaejd5Fv0FpejsSX6sANRSqxgzWaUo7IE40qnJ/nQ=
++github.com/grpc/grpc-go v1.83.2/go.mod h1:YPI1hK3kDked6iHvgX3tR0y+nX/qpMFKhPgFsokw1S8=
+ github.com/jackc/pgpassfile v1.0.0 h1:/6Hmqy13Ss2zCq62VdNG8tM1wchn8zjSGOBJ6icpsIM=
+ github.com/jackc/pgpassfile v1.0.0/go.mod h1:CEx0iS5ambNFdcRtxPj5JhEz+xB6uRky5eyVu/W2HEg=
+ github.com/jackc/pgservicefile v0.0.0-20240606120523-5a60cdf6a761 h1:iCEnooe7UlwOQYpKFhBabPMi4aNAfoODPEFNiAnClxo=
+@@ -138,6 +186,28 @@ github.com/jackc/pgx/v5 v5.11.0 h1:IzBBtyK9AHqf98cctWFifYSci2hgQR/cd56wB4p+ogg=
+ github.com/jackc/pgx/v5 v5.11.0/go.mod h1:mal1tBGAFfLHvZzaYh77YS/eC6IX9OWbRV1QIIM0Jn4=
+ github.com/jackc/puddle/v2 v2.2.2 h1:PR8nw+E/1w0GLuRFSmiioY6UooMp6KJv0/61nB7icHo=
+ github.com/jackc/puddle/v2 v2.2.2/go.mod h1:vriiEXHvEE654aYKXXjOvZM39qJ0q+azkZFrfEOc3H4=
++github.com/open-telemetry/opentelemetry-go v1.46.0 h1:8xYBKjf4FZuY6il/cEK4dwhLY4vx0F1tDcN6bwJxM8I=
++github.com/open-telemetry/opentelemetry-go v1.46.0/go.mod h1:Gj3SEScelsNC45tp4nSxRYlS+f5iez7W8XPMCt905kE=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0 h1:7iluuibFgRZ/nFDOuFatDgfWa/Hwnv1KCMQgQ9jncbk=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.71.0/go.mod h1:dylvB+ZiiwMvsDij9O84Uy7SijLgHMX4mbkncds+4Sw=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0 h1:suf2dOBqB9O7P8XFxYgjDprykDtB4cN/IMrbVvBbLmM=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.70.0/go.mod h1:085m8qbm4hgc8rZWGDEa4vmyyo2c3nPxUslYUKUIU04=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1 h1:JWC1GDOcmalGjqPMgf8gJFo7HrToUBytZiBhpGx823o=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0 h1:iVSpIyPeZ9CWceLiEwb3k5sziFFRChyI9GM8xZMW5Eo=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace v1.46.0/go.mod h1:716wFneO0ov19A2beH5hjfh9AK5z/VWNAtDijp1Y0/g=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0 h1:DfTmcdnGEf4zFWStHHApugXw9SHZW6p/1izQLrU6rJw=
++github.com/open-telemetry/opentelemetry-go/exporters/otlp/otlptrace/otlptracegrpc v1.46.0/go.mod h1:BOmGMCbAtvcJiSJ+hLuhgPLdDbimnraSl8irz3iY8sY=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0 h1:3n2+5681J4Dh6yAofRHJXSA1p1OFR1C89UdImSMWnEA=
++github.com/open-telemetry/opentelemetry-go/metric v1.46.0/go.mod h1:iPmdWqifKUdzziPkvvzIJXITl56fQx2mGM/DHLB3/2o=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0 h1:fTZ/QcnOwWCFk9AGcpY1DMkgLw241NJZd7IgJpKAQ08=
++github.com/open-telemetry/opentelemetry-go/sdk v1.46.0/go.mod h1:GAERFXFt5SYCEB+YiKUbMBeza6UaDH7GmGOZEfh2gSM=
++github.com/open-telemetry/opentelemetry-go/sdk/metric v1.46.0 h1:1zWcnRnlFWmBvF79ayGpxgoQJ+KND5yNL3RjiIUqqCQ=
++github.com/open-telemetry/opentelemetry-go/sdk/metric v1.46.0/go.mod h1:I1PbKrdVc8Qu8HYVDNtqVIwLwjNrhsV/uFuxfwg8mO4=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0 h1:VsHJD1WP2wPga1MYKopUXtaVtk4mBw3TK8OpbQmbrAs=
++github.com/open-telemetry/opentelemetry-go/trace v1.46.0/go.mod h1:J7GAXweO77XSFkB/rmAqk9D6ihszhFjLU+d9WuUxDLI=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0 h1:Xlv4xLQaDiN3cYVOPDezq3qrQBhUW3nzEJKs4Swqg8k=
++github.com/open-telemetry/opentelemetry-proto-go/otlp v1.11.0/go.mod h1:SmVizdCOAm3XBtG1g1NnOdhW6jtddT72hLMhv8VwA8E=
+ github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
+ github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 h1:GFCKgmp0tecUJ0sJuv4pzYCqS9+RGSn52M3FUwPs+uo=
+@@ -146,6 +216,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
+ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 h1:Jamvg5psRIccs7FGNTlIRMkT8wgtp5eCXdBlqhYGL6U=
+ github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
+ github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
++github.com/protocolbuffers/protobuf-go v1.36.12 h1:riDdLaUsOq24v5KFhYr+hnMJmsHr88g+R0VHrrob7wk=
++github.com/protocolbuffers/protobuf-go v1.36.12/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
+ github.com/sirupsen/logrus v1.9.4 h1:TsZE7l11zFCLZnZ+teH4Umoq5BhEIfIzfRDZ1Uzql2w=
+ github.com/sirupsen/logrus v1.9.4/go.mod h1:ftWc9WdOfJ0a92nsE2jF5u5ZwH8Bv2zdeOC42RjbV2g=
+ github.com/sirupsen/logrus v1.10.0 h1:T8MxJJXVZkfcC5zSRMRAg2F8+lxjmUCGGWPzFxO+Msc=
+diff --git a/src/shippingservice/go.mod b/src/shippingservice/go.mod
+index 3a6ed343..ec25055d 100644
+--- a/src/shippingservice/go.mod
++++ b/src/shippingservice/go.mod
+@@ -42,3 +42,30 @@ require (
+ 	google.golang.org/genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa // indirect
+ 	google.golang.org/genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa // indirect
+ )
++
++// gh-replace begin
++replace cloud.google.com/go/profiler => github.com/googleapis/google-cloud-go/profiler v0.6.0
++replace golang.org/x/net => github.com/golang/net v0.59.0
++replace google.golang.org/grpc => github.com/grpc/grpc-go v1.83.2
++replace google.golang.org/protobuf => github.com/protocolbuffers/protobuf-go v1.36.12
++replace cloud.google.com/go => github.com/googleapis/google-cloud-go v0.123.0
++replace cloud.google.com/go/auth => github.com/googleapis/google-cloud-go/auth v0.19.0
++replace cloud.google.com/go/auth/oauth2adapt => github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8
++replace cloud.google.com/go/compute/metadata => github.com/googleapis/google-cloud-go/compute/metadata v0.9.0
++replace go.opentelemetry.io/auto/sdk => github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1
++replace go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.63.0
++replace go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp => github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.61.0
++replace go.opentelemetry.io/otel => github.com/open-telemetry/opentelemetry-go v1.44.0
++replace go.opentelemetry.io/otel/metric => github.com/open-telemetry/opentelemetry-go/metric v1.44.0
++replace go.opentelemetry.io/otel/trace => github.com/open-telemetry/opentelemetry-go/trace v1.44.0
++replace golang.org/x/crypto => github.com/golang/crypto v0.57.0
++replace golang.org/x/oauth2 => github.com/golang/oauth2 v0.36.0
++replace golang.org/x/sync => github.com/golang/sync v0.23.0
++replace golang.org/x/sys => github.com/golang/sys v0.48.0
++replace golang.org/x/text => github.com/golang/text v0.42.0
++replace golang.org/x/time => github.com/golang/time v0.15.0
++replace google.golang.org/api => github.com/googleapis/google-api-go-client v0.274.0
++replace google.golang.org/genproto => github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7
++replace google.golang.org/genproto/googleapis/api => github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa
++replace google.golang.org/genproto/googleapis/rpc => github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa
++// gh-replace end
+diff --git a/src/shippingservice/go.sum b/src/shippingservice/go.sum
+index 25f87d57..c4101550 100644
+--- a/src/shippingservice/go.sum
++++ b/src/shippingservice/go.sum
+@@ -40,10 +40,24 @@ github.com/go-logr/logr v1.4.3 h1:CjnDlHq8ikf6E492q6eKboGOC0T8CDaOvkHCIg8idEI=
+ github.com/go-logr/logr v1.4.3/go.mod h1:9T104GzyrTigFIr8wt5mBrctHMim0Nb2HLGrmQ40KvY=
+ github.com/go-logr/stdr v1.2.2 h1:hSWxHoqTgW2S2qGc0LTAI563KZ5YKYRhT3MFKZMbjag=
+ github.com/go-logr/stdr v1.2.2/go.mod h1:mMo/vtBO5dYbehREoey6XUKy/eSumjCCveDpRre4VKE=
++github.com/golang/crypto v0.57.0 h1:DFMlYVvTJKfaqPD4FodB2RJSu4ddk0aDa7cSbT6LmEw=
++github.com/golang/crypto v0.57.0/go.mod h1:Fdz0i5U6CoizGwLda9DttjSk6qlZo25zYNtR+ycvuZA=
+ github.com/golang/mock v1.7.0-rc.1 h1:YojYx61/OLFsiv6Rw1Z96LpldJIy31o+UHmwAUMJ6/U=
+ github.com/golang/mock v1.7.0-rc.1/go.mod h1:s42URUywIqd+OcERslBJvOjepvNymP31m3q8d/GkuRs=
++github.com/golang/net v0.59.0 h1:E+8wJcoXn4Jvw0Leu2yOcCqbNm2Eb4afBgKq9ajwPag=
++github.com/golang/net v0.59.0/go.mod h1:2DA/G1UfVbCpQPeWTmMPGY7Cs2PkBkwu743bVX5PIVg=
++github.com/golang/oauth2 v0.36.0 h1:DxeUXjOm/bmiBFbF/LAQZ99F+OzJ3Zi1HYo+t3uWcFs=
++github.com/golang/oauth2 v0.36.0/go.mod h1:YDBUJMTkDnJS+A4BP4eZBjCqtokkg1hODuPjwiGPO7Q=
+ github.com/golang/protobuf v1.5.4 h1:i7eJL8qZTpSEXOPTxNKhASYpMn+8e5Q6AdndVa1dWek=
+ github.com/golang/protobuf v1.5.4/go.mod h1:lnTiLA8Wa4RWRcIUkrtSVa5nRhsEGBg48fD6rSs7xps=
++github.com/golang/sync v0.23.0 h1:+MkiyR+jHFcwZmVk+CsJLARSDWg+Kh6snabT+VF1ofA=
++github.com/golang/sync v0.23.0/go.mod h1:sUUOizhqBxiL6pEWpqNLUiaJn1ShEbZ6BBqskPbjZm0=
++github.com/golang/sys v0.48.0 h1:HrKQR3GpKFhR2PmZlzrAnIrwRGKw9H4aHLtzKRTSUPA=
++github.com/golang/sys v0.48.0/go.mod h1:hNLxWAXmnKAxqDtdwIYC4bM9oQPEecfsnNMuSxOs3og=
++github.com/golang/text v0.42.0 h1:DFi6gNmIx8vRI3xHkw7fgffY8MfAMwzEqSwq6GP3c/k=
++github.com/golang/text v0.42.0/go.mod h1:ojzP1Z+2QtioaF8DTtO8K5q7JWVVYwZKenzujK0Zd0E=
++github.com/golang/time v0.15.0 h1:aFbqL+W1NimVJlTP7D1nhQk4D0cHjWjI+TEvfmHRu4U=
++github.com/golang/time v0.15.0/go.mod h1:Y4YMaQmXwGQZoFaVFk4YpCt4FLQMYKZe9oeV/f4MSno=
+ github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
+ github.com/google/go-cmp v0.7.0/go.mod h1:pXiqmnSA92OHEEa9HXL2W4E7lf9JzCmGVUdgjX3N/iU=
+ github.com/google/pprof v0.0.0-20260402051712-545e8a4df936 h1:EwtI+Al+DeppwYX2oXJCETMO23COyaKGP6fHVpkpWpg=
+@@ -56,8 +70,42 @@ github.com/googleapis/enterprise-certificate-proxy v0.3.14 h1:yh8ncqsbUY4shRD5dA
+ github.com/googleapis/enterprise-certificate-proxy v0.3.14/go.mod h1:vqVt9yG9480NtzREnTlmGSBmFrA+bzb0yl0TxoBQXOg=
+ github.com/googleapis/gax-go/v2 v2.21.0 h1:h45NjjzEO3faG9Lg/cFrBh2PgegVVgzqKzuZl/wMbiI=
+ github.com/googleapis/gax-go/v2 v2.21.0/go.mod h1:But/NJU6TnZsrLai/xBAQLLz+Hc7fHZJt/hsCz3Fih4=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7 h1:No60E+AuMgwZAA4Z1kz97NMT0szGvyFEBoN/DNbF1wo=
++github.com/googleapis/go-genproto v0.0.0-20260319201613-d00831a3d3e7/go.mod h1:L43LFes82YgSonw6iTXTxXUX1OlULt4AQtkik4ULL/I=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa h1:Iy8aHjpL0mmayBLloX8S+uVr87HpoJNGQyCh3p1uxA8=
++github.com/googleapis/go-genproto/googleapis/api v0.0.0-20260526163538-3dc84a4a5aaa/go.mod h1:q4lMZS6kskjT5HvCPrnnypcDPVJqT/f4nfxmkE7gryY=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa h1:UeIJ17YRCUFvskxClneAm4ZasycBoDz+eT60rDR1DQo=
++github.com/googleapis/go-genproto/googleapis/rpc v0.0.0-20260526163538-3dc84a4a5aaa/go.mod h1:4Hqkh8ycfw05ld/3BWL7rJOSfebL2Q+DVDeRgYgxUU8=
++github.com/googleapis/google-api-go-client v0.274.0 h1:mevxgoxdRt/do/a921FNM+5T+xyIyCjoNql9kyc2aV4=
++github.com/googleapis/google-api-go-client v0.274.0/go.mod h1:JbAt7mF+XVmWu6xNP8/+CTiGH30ofmCmk9nM8d8fHew=
++github.com/googleapis/google-cloud-go v0.123.0 h1:gzhBxou7jcT666DAblqvBGsbqpF0m1UrSsMBmuXgrfI=
++github.com/googleapis/google-cloud-go v0.123.0/go.mod h1:xBoMV08QcqUGuPW65Qfm1o9Y4zKZBpGS+7bImXLTAZU=
++github.com/googleapis/google-cloud-go/auth v0.19.0 h1:rHI9c8Y2S+5yVDb/8AC7+/9hZ0JYqwKY7EGqRud5I+Y=
++github.com/googleapis/google-cloud-go/auth v0.19.0/go.mod h1:2Aph7BT2KnaSFOM0JDPyiYgNh6PL9vGMiP8CUIXZ+IY=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8 h1:NeigwMtFglem/dPwS4Tpa4CEbQ7Vty+9Vmxh4rSTKrA=
++github.com/googleapis/google-cloud-go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0 h1:NRt+ReYkqbTPWOBupWwAyhSUYIoqrkfWV1VKDP7vOIc=
++github.com/googleapis/google-cloud-go/compute/metadata v0.9.0/go.mod h1:E0bWwX5wTnLPedCKqk3pJmVgCBSM6qQI1yTBdEb3C10=
++github.com/googleapis/google-cloud-go/profiler v0.6.0 h1:dedBi7baVIENIfBAPt/9aGq84SwuPdXmKwo4AoZE0Rs=
++github.com/googleapis/google-cloud-go/profiler v0.6.0/go.mod h1:cJV7Qfj0o9PAC7q/xQTkM6qn2FO9So3TFk4P5O5yLis=
++github.com/grpc/grpc-go v1.83.2 h1:qOXaejd5Fv0FpejsSX6sANRSqxgzWaUo7IE40qnJ/nQ=
++github.com/grpc/grpc-go v1.83.2/go.mod h1:YPI1hK3kDked6iHvgX3tR0y+nX/qpMFKhPgFsokw1S8=
++github.com/open-telemetry/opentelemetry-go v1.44.0 h1:GURJJ2TKDn5bhqI7hBUiU+lIq4C2dJrK24+I8pl/NJ8=
++github.com/open-telemetry/opentelemetry-go v1.44.0/go.mod h1:BMgjTHL9WPRlRjL2oZCBTL4whCGtXch2H4BhOPIAyYc=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.63.0 h1:UBCiBK5Xh0kflh5oB69eFTortwtzo7llkfcr9FGEx+c=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.63.0/go.mod h1:fvPi2qXDqFs8M4B4fmJhE92TyQs9Ydjlg3RvfUp+NbQ=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.61.0 h1:mEjk3U9YTMP4r3jB11voC8gkz/CaKQ7BOGFYwZP29WA=
++github.com/open-telemetry/opentelemetry-go-contrib/instrumentation/net/http/otelhttp v0.61.0/go.mod h1:UHB22Z8QsdRDrnAtX4PntOl36ajSxcdUMt1sF7Y6E7Q=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1 h1:JWC1GDOcmalGjqPMgf8gJFo7HrToUBytZiBhpGx823o=
++github.com/open-telemetry/opentelemetry-go-instrumentation/sdk v1.2.1/go.mod h1:KRTj+aOaElaLi+wW1kO/DZRXwkF4C5xPbEe3ZiIhN7Y=
++github.com/open-telemetry/opentelemetry-go/metric v1.44.0 h1:uG5CwfLl4k8K9ul6PCXBoVP/gn0PedrcIC/U3+U6XX4=
++github.com/open-telemetry/opentelemetry-go/metric v1.44.0/go.mod h1:8O7hanEPBNgEMmybD3s2VBKcgWOCsA6tzHBPODAiquo=
++github.com/open-telemetry/opentelemetry-go/trace v1.44.0 h1:A8ilTRB7ppNWfSdDpNdYISpqwaxdYeak8BinZAX0PWQ=
++github.com/open-telemetry/opentelemetry-go/trace v1.44.0/go.mod h1:oLl1jrMQAVo6v3GAggN+1VH9VIz9iUSvW53sW1Q8PIE=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 h1:GFCKgmp0tecUJ0sJuv4pzYCqS9+RGSn52M3FUwPs+uo=
+ github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10/go.mod h1:t/avpk3KcrXxUnYOhZhMXJlSEyie6gQbtLq5NM3loB8=
++github.com/protocolbuffers/protobuf-go v1.36.12 h1:riDdLaUsOq24v5KFhYr+hnMJmsHr88g+R0VHrrob7wk=
++github.com/protocolbuffers/protobuf-go v1.36.12/go.mod h1:HTf+CrKn2C3g5S8VImy6tdcUvCska2kB7j23XfzDpco=
+ github.com/sirupsen/logrus v1.10.2 h1:G2SED73/qrAu6YwbdxOD6peLkCBI3z7L+ykJFTXJBBo=
+ github.com/sirupsen/logrus v1.10.2/go.mod h1:SLEg8TqYulVKKfIGHldVp2K2aYz2DKSVBq4g/H5bR7Q=
+ github.com/spiffe/go-spiffe/v2 v2.7.0 h1:uXe1MflJoHw58wAUvxVlcM7WpKtijWG7I1UidcGh6g4=
+-- 
+2.43.0
+

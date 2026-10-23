@@ -1,0 +1,78 @@
+From b82355fd58adcc0b56ce9a8ad572835f0a0b47dc Mon Sep 17 00:00:00 2001
+From: TraceDebt case study <casestudy@example.org>
+Date: Thu, 22 Oct 2026 07:19:46 -0700
+Subject: [PATCH 4/5] productcatalogservice: warm related products via
+ recommendationservice (25% experiment)
+
+---
+ src/productcatalogservice/product_catalog.go |  1 +
+ src/productcatalogservice/related.go         | 45 ++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
+ create mode 100644 src/productcatalogservice/related.go
+
+diff --git a/src/productcatalogservice/product_catalog.go b/src/productcatalogservice/product_catalog.go
+index bbc364cf..a2c8121b 100644
+--- a/src/productcatalogservice/product_catalog.go
++++ b/src/productcatalogservice/product_catalog.go
+@@ -50,6 +50,7 @@ func (p *productCatalog) GetProduct(ctx context.Context, req *pb.GetProductReque
+ 	catalog := p.parseCatalog()
+ 	for _, product := range catalog {
+ 		if req.Id == product.Id {
++			warmRelated(ctx, req.Id)
+ 			return product, nil
+ 		}
+ 	}
+diff --git a/src/productcatalogservice/related.go b/src/productcatalogservice/related.go
+new file mode 100644
+index 00000000..868f8eb1
+--- /dev/null
++++ b/src/productcatalogservice/related.go
+@@ -0,0 +1,45 @@
++// Seeded drift for the TraceDebt case study; not part of upstream Online Boutique.
++
++package main
++
++import (
++	"context"
++	"math/rand"
++	"os"
++	"sync"
++	"time"
++
++	pb "github.com/GoogleCloudPlatform/microservices-demo/src/productcatalogservice/genproto"
++	"go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc"
++	"google.golang.org/grpc"
++	"google.golang.org/grpc/credentials/insecure"
++)
++
++// Experiment: warm the "related products" strip by asking the
++// recommendation service while serving a product. Enabled for a quarter of
++// requests when RECOMMENDATION_SERVICE_ADDR is set.
++var (
++	relatedOnce   sync.Once
++	relatedClient pb.RecommendationServiceClient
++)
++
++func warmRelated(ctx context.Context, id string) {
++	relatedOnce.Do(func() {
++		addr := os.Getenv("RECOMMENDATION_SERVICE_ADDR")
++		if addr == "" {
++			return
++		}
++		conn, err := grpc.NewClient(addr,
++			grpc.WithTransportCredentials(insecure.NewCredentials()),
++			grpc.WithStatsHandler(otelgrpc.NewClientHandler()))
++		if err == nil {
++			relatedClient = pb.NewRecommendationServiceClient(conn)
++		}
++	})
++	if relatedClient == nil || rand.Float64() >= 0.25 {
++		return
++	}
++	cctx, cancel := context.WithTimeout(ctx, 500*time.Millisecond)
++	defer cancel()
++	_, _ = relatedClient.ListRecommendations(cctx, &pb.ListRecommendationsRequest{ProductIds: []string{id}})
++}
+-- 
+2.43.0
+

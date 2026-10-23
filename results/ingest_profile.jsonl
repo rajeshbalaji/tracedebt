@@ -1,0 +1,2 @@
+{"mode": "perwindow", "files": 30, "spans": 538730, "parse_s": 6.79, "analyse_s": 0.99, "end_to_end_spans_per_s": 69248, "analysis_only_spans_per_s": 545622, "peak_rss_mb": 52, "bytes_per_span": 101}
+{"mode": "merged", "files": 30, "spans": 538730, "parse_s": 7.65, "analyse_s": 0.95, "end_to_end_spans_per_s": 62647, "analysis_only_spans_per_s": 569284, "peak_rss_mb": 317, "bytes_per_span": 617}

@@ -1,0 +1,118 @@
+system: ticketing-demo
+layers:
+- edge
+- api
+- domain
+- data
+allow_layer_skip: false
+services:
+  assurance-svc:
+    layer: domain
+    context: ctx1
+    owns:
+    - assurance-db
+  auth-svc:
+    layer: domain
+    context: ctx1
+  basic-svc:
+    layer: domain
+    context: ctx0
+    owns:
+    - basic-db
+    subscribes:
+    - route-events
+  contacts-svc:
+    layer: domain
+    context: ctx1
+    owns:
+    - contacts-db
+    subscribes:
+    - station-events
+  gateway:
+    layer: edge
+  geo-svc:
+    layer: domain
+    context: ctx0
+  loyalty-svc:
+    layer: domain
+    context: ctx1
+    owns:
+    - loyalty-db
+  mobile-bff:
+    layer: api
+  rebook-svc:
+    layer: domain
+    context: ctx0
+  route-svc:
+    layer: domain
+    context: ctx0
+    owns:
+    - route-db
+    publishes:
+    - route-events
+    subscribes:
+    - station-events
+  seat-svc:
+    layer: domain
+    context: ctx2
+    owns:
+    - seat-db
+    subscribes:
+    - route-events
+  station-svc:
+    layer: domain
+    context: ctx2
+    owns:
+    - station-db
+    publishes:
+    - station-events
+  travel-svc:
+    layer: domain
+    context: ctx2
+  web-bff:
+    layer: api
+dependencies:
+  auth-svc:
+  - assurance-svc
+  basic-svc:
+  - route-svc
+  contacts-svc:
+  - assurance-svc
+  - auth-svc
+  - geo-svc
+  - loyalty-svc
+  gateway:
+  - mobile-bff
+  - web-bff
+  geo-svc:
+  - assurance-svc
+  mobile-bff:
+  - contacts-svc
+  - geo-svc
+  - rebook-svc
+  rebook-svc:
+  - basic-svc
+  route-svc:
+  - assurance-svc
+  - geo-svc
+  seat-svc:
+  - assurance-svc
+  - geo-svc
+  station-svc:
+  - travel-svc
+  travel-svc:
+  - seat-svc
+  web-bff:
+  - assurance-svc
+  - rebook-svc
+  - station-svc
+topics:
+  route-events:
+    owner: route-svc
+  station-events:
+    owner: station-svc
+ignore:
+  services:
+  - mesh-probe
+  operations:
+  - /health

@@ -1,0 +1,51 @@
+From 5300f6012d4c6abf15d1b6cc3aafd4c66def1369 Mon Sep 17 00:00:00 2001
+From: TraceDebt case study <casestudy@example.org>
+Date: Thu, 22 Oct 2026 22:23:47 -0700
+Subject: [PATCH] recommendationservice: do not recommend what is in the cart,
+ via cartservice (approved change)
+
+---
+ src/recommendationservice/recommendation_server.py | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/src/recommendationservice/recommendation_server.py b/src/recommendationservice/recommendation_server.py
+index 7a8da7da..f73f29fe 100755
+--- a/src/recommendationservice/recommendation_server.py
++++ b/src/recommendationservice/recommendation_server.py
+@@ -66,13 +66,22 @@ def initStackdriverProfiling():
+   #       logger.warning("Could not initialize Stackdriver Profiler after retrying, giving up")
+   return
+ 
++cart_stub = None   # set in __main__ when CART_SERVICE_ADDR is configured
++
+ class RecommendationService(demo_pb2_grpc.RecommendationServiceServicer):
+     def ListRecommendations(self, request, context):
+         max_responses = 5
+         # fetch list of products from product catalog stub
+         cat_response = product_catalog_stub.ListProducts(demo_pb2.Empty())
+         product_ids = [x.id for x in cat_response.products]
+-        filtered_products = list(set(product_ids)-set(request.product_ids))
++        # Approved design change: do not recommend what is already in the cart,
++        # asking cartservice through its API (the architecture review agreed to
++        # recommendationservice -> cartservice).
++        in_cart = set()
++        if cart_stub is not None and request.user_id:
++            in_cart = {i.product_id for i in cart_stub.GetCart(
++                demo_pb2.GetCartRequest(user_id=request.user_id)).items}
++        filtered_products = list(set(product_ids)-set(request.product_ids)-in_cart)
+         num_products = len(filtered_products)
+         num_return = min(max_responses, num_products)
+         # sample list of indicies to return
+@@ -134,6 +143,9 @@ if __name__ == "__main__":
+     logger.info("product catalog address: " + catalog_addr)
+     channel = grpc.insecure_channel(catalog_addr)
+     product_catalog_stub = demo_pb2_grpc.ProductCatalogServiceStub(channel)
++    cart_addr = os.environ.get('CART_SERVICE_ADDR', '')
++    if cart_addr:
++        cart_stub = demo_pb2_grpc.CartServiceStub(grpc.insecure_channel(cart_addr))
+ 
+     # create gRPC server
+     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+-- 
+2.43.0
+

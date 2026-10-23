@@ -1,0 +1,7 @@
+digraph tracedebt {
+  rankdir=TB; node [shape=box, fontsize=10];
+  subgraph "cluster_domain" { label="domain"; "emailservice"; "productcatalogservice"; "recommendationservice"; }
+  "emailservice" -> "productcatalogservice" [color=red, penwidth=2, fontcolor=red, fontsize=8, label="UNDECLARED_XCTX"];
+  "productcatalogservice" -> "recommendationservice" [color=red, penwidth=2, fontcolor=red, fontsize=8, label="CYCLE"];
+  "recommendationservice" -> "productcatalogservice" [color=gray60];
+}

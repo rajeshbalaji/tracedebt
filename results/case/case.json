@@ -1,0 +1,1637 @@
+{
+ "windows": 30,
+ "window_seconds": 60.0,
+ "requests": {
+  "ok": 14413,
+  "err": 0
+ },
+ "service_names_in_telemetry": {
+  "currencyservice": 62690,
+  "cartservice": 40366,
+  "frontend": 229789,
+  "recommendationservice": 58541,
+  "productcatalogservice": 134575,
+  "checkoutservice": 10100,
+  "emailservice": 1892,
+  "paymentservice": 764,
+  "cart-backfill": 13
+ },
+ "span_kinds": {
+  "server": 255385,
+  "client": 283339,
+  "internal": 6
+ },
+ "init_vs_hand": {
+  "hand_deps": 14,
+  "draft_deps": 14,
+  "agree": 14,
+  "missing": [],
+  "extra": [],
+  "owners_hand": {
+   "redis-cart": "cartservice"
+  },
+  "owners_draft": {
+   "redis-cart": "cartservice"
+  },
+  "review_notes": [
+   "seen only occasionally, not declared: cart-backfill -> db:redis-cart"
+  ]
+ },
+ "runs": {
+  "full": {
+   "drifts": {
+    "drift-1": {
+     "confirmed": true,
+     "rules": [
+      "FOREIGN_DATA"
+     ],
+     "confirmed_at": "w08",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": "w26",
+     "exposure": 0.6145181476846058,
+     "evidence": "36cfe079bb413c04a109c5e053514a82"
+    },
+    "drift-2": {
+     "confirmed": true,
+     "rules": [
+      "UNDECLARED_XCTX"
+     ],
+     "confirmed_at": "w14",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.02857142857142857,
+     "evidence": "7a0504f79a37e6d986d986b5b332f4e3"
+    },
+    "drift-3": {
+     "confirmed": true,
+     "rules": [
+      "CYCLE",
+      "UNDECLARED"
+     ],
+     "confirmed_at": "w20",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.5595238095238095,
+     "evidence": "d4cf459839962de5f4386752a49c94f2"
+    }
+   },
+   "other_confirmed": [],
+   "unconfirmed_candidates": [
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "cart-backfill",
+       "db:redis-cart"
+      ]
+     ],
+     "first_seen": "w03"
+    }
+   ],
+   "timeline": [
+    {
+     "window": "w00",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w01",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w02",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w03",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w04",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w05",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w06",
+     "phase": "v1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w07",
+     "phase": "v1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w08",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 2.9878,
+     "trace_share": 0.5976,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w09",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.067,
+     "trace_share": 0.6134,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w10",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.0455,
+     "trace_share": 0.6091,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w11",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.0483,
+     "trace_share": 0.6097,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w12",
+     "phase": "v2",
+     "severity": 5.0,
+     "exposure": 2.9846,
+     "trace_share": 0.5969,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w13",
+     "phase": "v2",
+     "severity": 5.0,
+     "exposure": 3.1079,
+     "trace_share": 0.6216,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w14",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 2.8157,
+     "trace_share": 0.5461,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w15",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 2.9847,
+     "trace_share": 0.5797,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w16",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 3.2191,
+     "trace_share": 0.6267,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w17",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 3.0774,
+     "trace_share": 0.593,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w18",
+     "phase": "v3",
+     "severity": 8.0,
+     "exposure": 3.0663,
+     "trace_share": 0.5995,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w19",
+     "phase": "v3",
+     "severity": 8.0,
+     "exposure": 3.1283,
+     "trace_share": 0.6077,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w20",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.8227,
+     "trace_share": 0.6793,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w21",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.3988,
+     "trace_share": 0.6627,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w22",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.295,
+     "trace_share": 0.6469,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w23",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.2303,
+     "trace_share": 0.6333,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w24",
+     "phase": "v4",
+     "severity": 14.0,
+     "exposure": 6.4718,
+     "trace_share": 0.5517,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w25",
+     "phase": "v4",
+     "severity": 14.0,
+     "exposure": 6.3101,
+     "trace_share": 0.5274,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w26",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 3.1232,
+     "trace_share": 0.5059,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w27",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 3.3512,
+     "trace_share": 0.5479,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w28",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 3.345,
+     "trace_share": 0.545,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w29",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 3.4429,
+     "trace_share": 0.5595,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    }
+   ],
+   "per_window": [
+    {
+     "window": "w00",
+     "traces": 826,
+     "spans": 16349,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w01",
+     "traces": 816,
+     "spans": 16429,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w02",
+     "traces": 819,
+     "spans": 16397,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w03",
+     "traces": 810,
+     "spans": 16088,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w04",
+     "traces": 807,
+     "spans": 16433,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w05",
+     "traces": 816,
+     "spans": 16168,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w06",
+     "traces": 826,
+     "spans": 16884,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w07",
+     "traces": 805,
+     "spans": 16594,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w08",
+     "traces": 902,
+     "spans": 17422,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w09",
+     "traces": 851,
+     "spans": 17693,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w10",
+     "traces": 770,
+     "spans": 15701,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w11",
+     "traces": 807,
+     "spans": 16507,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w12",
+     "traces": 846,
+     "spans": 17107,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w13",
+     "traces": 806,
+     "spans": 16178,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w14",
+     "traces": 890,
+     "spans": 17692,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w15",
+     "traces": 847,
+     "spans": 16397,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w16",
+     "traces": 817,
+     "spans": 16830,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w17",
+     "traces": 892,
+     "spans": 17953,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w18",
+     "traces": 754,
+     "spans": 18587,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 37
+    },
+    {
+     "window": "w19",
+     "traces": 803,
+     "spans": 19804,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w20",
+     "traces": 767,
+     "spans": 19389,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w21",
+     "traces": 845,
+     "spans": 20713,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w22",
+     "traces": 844,
+     "spans": 20897,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w23",
+     "traces": 799,
+     "spans": 19964,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w24",
+     "traces": 774,
+     "spans": 18433,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w25",
+     "traces": 859,
+     "spans": 20017,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w26",
+     "traces": 852,
+     "spans": 20465,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 40
+    },
+    {
+     "window": "w27",
+     "traces": 803,
+     "spans": 19259,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 38
+    },
+    {
+     "window": "w28",
+     "traces": 800,
+     "spans": 19632,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 39
+    },
+    {
+     "window": "w29",
+     "traces": 840,
+     "spans": 20748,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 41
+    }
+   ],
+   "coverage": {
+    "recommendationservice": {
+     "traces_per_window": 526.5,
+     "p_min": 0.0036930633462447515
+    },
+    "currencyservice": {
+     "traces_per_window": 659.2,
+     "p_min": 0.002950507247931111
+    },
+    "paymentservice": {
+     "traces_per_window": 25.0,
+     "p_min": 0.07496146634392398
+    },
+    "cartservice": {
+     "traces_per_window": 636.8,
+     "p_min": 0.003054606061087428
+    },
+    "productcatalogservice": {
+     "traces_per_window": 653.8,
+     "p_min": 0.0029752929072374146
+    },
+    "frontend": {
+     "traces_per_window": 704.0,
+     "p_min": 0.0027632166166092764
+    },
+    "emailservice": {
+     "traces_per_window": 25.0,
+     "p_min": 0.07496146634392398
+    },
+    "checkoutservice": {
+     "traces_per_window": 113.5,
+     "p_min": 0.0170165253512492
+    }
+   },
+   "inferred_edges": [
+    [
+     "checkoutservice",
+     "currencyservice"
+    ],
+    [
+     "checkoutservice",
+     "paymentservice"
+    ],
+    [
+     "checkoutservice",
+     "shippingservice"
+    ],
+    [
+     "frontend",
+     "adservice"
+    ],
+    [
+     "frontend",
+     "currencyservice"
+    ],
+    [
+     "frontend",
+     "shippingservice"
+    ]
+   ],
+   "stale": []
+  },
+  "head10": {
+   "drifts": {
+    "drift-1": {
+     "confirmed": true,
+     "rules": [
+      "FOREIGN_DATA"
+     ],
+     "confirmed_at": "w08",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": "w26",
+     "exposure": 0.575,
+     "evidence": "076ecc74016244eb4347d79cbb1d5b62"
+    },
+    "drift-2": {
+     "confirmed": true,
+     "rules": [
+      "UNDECLARED_XCTX"
+     ],
+     "confirmed_at": "w14",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.03333333333333333,
+     "evidence": "f5f47af756ba4147d373fc6c4a19fa5e"
+    },
+    "drift-3": {
+     "confirmed": true,
+     "rules": [
+      "CYCLE",
+      "UNDECLARED"
+     ],
+     "confirmed_at": "w20",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.4888888888888889,
+     "evidence": "5745eeb9d8ad5c2f0dfcfebf79d03e90"
+    }
+   },
+   "other_confirmed": [],
+   "unconfirmed_candidates": [
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "cart-backfill",
+       "db:redis-cart"
+      ]
+     ],
+     "first_seen": "w03"
+    }
+   ],
+   "timeline": [
+    {
+     "window": "w00",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w01",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w02",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w03",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w04",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w05",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w06",
+     "phase": "v1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w07",
+     "phase": "v1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "trace_share": 0.0,
+     "findings": []
+    },
+    {
+     "window": "w08",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.6076,
+     "trace_share": 0.7215,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w09",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.0769,
+     "trace_share": 0.6154,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w10",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.3333,
+     "trace_share": 0.6667,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w11",
+     "phase": "v1",
+     "severity": 5.0,
+     "exposure": 3.3684,
+     "trace_share": 0.6737,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w12",
+     "phase": "v2",
+     "severity": 5.0,
+     "exposure": 2.9213,
+     "trace_share": 0.5843,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w13",
+     "phase": "v2",
+     "severity": 5.0,
+     "exposure": 3.4783,
+     "trace_share": 0.6957,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart"
+     ]
+    },
+    {
+     "window": "w14",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 2.617,
+     "trace_share": 0.4787,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w15",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 3.2809,
+     "trace_share": 0.6292,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w16",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 3.1489,
+     "trace_share": 0.617,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w17",
+     "phase": "v2",
+     "severity": 8.0,
+     "exposure": 3.1538,
+     "trace_share": 0.6044,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w18",
+     "phase": "v3",
+     "severity": 8.0,
+     "exposure": 3.5942,
+     "trace_share": 0.7246,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w19",
+     "phase": "v3",
+     "severity": 8.0,
+     "exposure": 3.5067,
+     "trace_share": 0.6933,
+     "findings": [
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w20",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.6061,
+     "trace_share": 0.6515,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w21",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.5465,
+     "trace_share": 0.6744,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w22",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 6.84,
+     "trace_share": 0.7067,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w23",
+     "phase": "v3",
+     "severity": 14.0,
+     "exposure": 5.875,
+     "trace_share": 0.6125,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w24",
+     "phase": "v4",
+     "severity": 14.0,
+     "exposure": 5.955,
+     "trace_share": 0.5067,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w25",
+     "phase": "v4",
+     "severity": 14.0,
+     "exposure": 6.6332,
+     "trace_share": 0.6044,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "FOREIGN_DATA:recommendationservice>db:redis-cart",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w26",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 2.6571,
+     "trace_share": 0.4429,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w27",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 2.7722,
+     "trace_share": 0.4557,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w28",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 2.9016,
+     "trace_share": 0.4773,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w29",
+     "phase": "v4",
+     "severity": 9.0,
+     "exposure": 3.0333,
+     "trace_share": 0.4889,
+     "findings": [
+      "CYCLE:productcatalogservice>recommendationservice",
+      "UNDECLARED:productcatalogservice>recommendationservice",
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    }
+   ],
+   "per_window": [
+    {
+     "window": "w00",
+     "traces": 68,
+     "spans": 1309,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w01",
+     "traces": 68,
+     "spans": 1407,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 5
+    },
+    {
+     "window": "w02",
+     "traces": 85,
+     "spans": 1728,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 2
+    },
+    {
+     "window": "w03",
+     "traces": 91,
+     "spans": 1760,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w04",
+     "traces": 82,
+     "spans": 1688,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 6
+    },
+    {
+     "window": "w05",
+     "traces": 79,
+     "spans": 1445,
+     "edges": 15,
+     "inferred_edges": 6,
+     "dropped_spans": 7
+    },
+    {
+     "window": "w06",
+     "traces": 71,
+     "spans": 1357,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 1
+    },
+    {
+     "window": "w07",
+     "traces": 76,
+     "spans": 1551,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 2
+    },
+    {
+     "window": "w08",
+     "traces": 79,
+     "spans": 1599,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w09",
+     "traces": 78,
+     "spans": 1587,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w10",
+     "traces": 90,
+     "spans": 1946,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w11",
+     "traces": 95,
+     "spans": 1981,
+     "edges": 16,
+     "inferred_edges": 6,
+     "dropped_spans": 6
+    },
+    {
+     "window": "w12",
+     "traces": 89,
+     "spans": 1727,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 8
+    },
+    {
+     "window": "w13",
+     "traces": 69,
+     "spans": 1439,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 1
+    },
+    {
+     "window": "w14",
+     "traces": 94,
+     "spans": 1868,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w15",
+     "traces": 89,
+     "spans": 1797,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w16",
+     "traces": 94,
+     "spans": 1991,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w17",
+     "traces": 91,
+     "spans": 1793,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w18",
+     "traces": 69,
+     "spans": 1863,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 1
+    },
+    {
+     "window": "w19",
+     "traces": 75,
+     "spans": 1982,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 5
+    },
+    {
+     "window": "w20",
+     "traces": 66,
+     "spans": 1562,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 2
+    },
+    {
+     "window": "w21",
+     "traces": 86,
+     "spans": 2170,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 5
+    },
+    {
+     "window": "w22",
+     "traces": 75,
+     "spans": 2010,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 2
+    },
+    {
+     "window": "w23",
+     "traces": 80,
+     "spans": 1932,
+     "edges": 18,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w24",
+     "traces": 75,
+     "spans": 1620,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w25",
+     "traces": 91,
+     "spans": 2207,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w26",
+     "traces": 70,
+     "spans": 1649,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w27",
+     "traces": 79,
+     "spans": 1760,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    },
+    {
+     "window": "w28",
+     "traces": 88,
+     "spans": 2069,
+     "edges": 10,
+     "inferred_edges": 4,
+     "dropped_spans": 4
+    },
+    {
+     "window": "w29",
+     "traces": 90,
+     "spans": 2161,
+     "edges": 17,
+     "inferred_edges": 6,
+     "dropped_spans": 3
+    }
+   ],
+   "coverage": {
+    "recommendationservice": {
+     "traces_per_window": 46.5,
+     "p_min": 0.04102704997024176
+    },
+    "currencyservice": {
+     "traces_per_window": 63.8,
+     "p_min": 0.030094676982146074
+    },
+    "paymentservice": {
+     "traces_per_window": 1.5,
+     "p_min": 0.7271040627900812
+    },
+    "cartservice": {
+     "traces_per_window": 61.0,
+     "p_min": 0.03142986129471592
+    },
+    "productcatalogservice": {
+     "traces_per_window": 63.0,
+     "p_min": 0.030447436861901545
+    },
+    "frontend": {
+     "traces_per_window": 68.2,
+     "p_min": 0.028138604753256025
+    },
+    "emailservice": {
+     "traces_per_window": 1.5,
+     "p_min": 0.7271040627900812
+    },
+    "checkoutservice": {
+     "traces_per_window": 11.0,
+     "p_min": 0.1622961535944646
+    }
+   },
+   "inferred_edges": [
+    [
+     "checkoutservice",
+     "currencyservice"
+    ],
+    [
+     "checkoutservice",
+     "paymentservice"
+    ],
+    [
+     "checkoutservice",
+     "shippingservice"
+    ],
+    [
+     "frontend",
+     "adservice"
+    ],
+    [
+     "frontend",
+     "currencyservice"
+    ],
+    [
+     "frontend",
+     "shippingservice"
+    ]
+   ],
+   "stale": []
+  },
+  "noalias": {
+   "drifts": {
+    "drift-1": {
+     "confirmed": false
+    },
+    "drift-2": {
+     "confirmed": true,
+     "rules": [
+      "UNDECLARED_XCTX"
+     ],
+     "confirmed_at": "w14",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.02857142857142857,
+     "evidence": "7a0504f79a37e6d986d986b5b332f4e3"
+    },
+    "drift-3": {
+     "confirmed": true,
+     "rules": [
+      "CYCLE",
+      "UNDECLARED"
+     ],
+     "confirmed_at": "w20",
+     "windows_after_deploy": 3,
+     "minutes_after_deploy": 3.0,
+     "resolved_at": null,
+     "exposure": 0.5464285714285714,
+     "evidence": "3d5cc18a65c9794b4d078803b283145b"
+    }
+   },
+   "other_confirmed": [
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.RecommendationService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "cartservice",
+       "db:redis://127.0.0.1:6379"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.CurrencyService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "recommendationservice",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.CurrencyService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.PaymentService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.ShippingService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.ShippingService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.AdService"
+      ]
+     ],
+     "confirmed_at": "w02",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.CartService"
+      ]
+     ],
+     "confirmed_at": "w05",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.EmailService"
+      ]
+     ],
+     "confirmed_at": "w07",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.CartService"
+      ]
+     ],
+     "confirmed_at": "w11",
+     "resolved_at": "w22"
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "frontend",
+       "hipstershop.CheckoutService"
+      ]
+     ],
+     "confirmed_at": "w14",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "recommendationservice",
+       "db:redis://127.0.0.1:6379"
+      ]
+     ],
+     "confirmed_at": "w08",
+     "resolved_at": "w26"
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "checkoutservice",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w26",
+     "resolved_at": null
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "emailservice",
+       "hipstershop.ProductCatalogService"
+      ]
+     ],
+     "confirmed_at": "w15",
+     "resolved_at": "w20"
+    },
+    {
+     "rule": "UNKNOWN_SERVICE",
+     "edges": [
+      [
+       "productcatalogservice",
+       "hipstershop.RecommendationService"
+      ]
+     ],
+     "confirmed_at": "w21",
+     "resolved_at": null
+    }
+   ],
+   "baseline_findings_v0": [
+    "UNKNOWN_SERVICE:cartservice>db:redis://127.0.0.1:6379",
+    "UNKNOWN_SERVICE:checkoutservice>hipstershop.CurrencyService",
+    "UNKNOWN_SERVICE:checkoutservice>hipstershop.PaymentService",
+    "UNKNOWN_SERVICE:checkoutservice>hipstershop.ShippingService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.AdService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.CartService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.CurrencyService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.ProductCatalogService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.RecommendationService",
+    "UNKNOWN_SERVICE:frontend>hipstershop.ShippingService",
+    "UNKNOWN_SERVICE:recommendationservice>hipstershop.ProductCatalogService"
+   ]
+  }
+ }
+}

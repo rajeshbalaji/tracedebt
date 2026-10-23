@@ -1,0 +1,21 @@
+{
+ "python": "3.13.16",
+ "synthetic": {
+  "S": {
+   "spans": 1006446.0,
+   "seconds": 2.02,
+   "spans_per_s": 497561
+  },
+  "M": {
+   "spans": 2441722.0,
+   "seconds": 5.14,
+   "spans_per_s": 475314
+  },
+  "L": {
+   "spans": 3853301.0,
+   "seconds": 8.52,
+   "spans_per_s": 452479
+  }
+ },
+ "case_cli_seconds": 8.1
+}

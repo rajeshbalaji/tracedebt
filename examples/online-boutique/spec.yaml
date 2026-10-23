@@ -1,0 +1,39 @@
+# Intended architecture of Online Boutique v0.10.7. Layers, contexts, ownership and
+# dependencies were written by hand from the project's README and architecture
+# diagram before any trace was analysed; `aliases` was added after looking at
+# how the services' telemetry names each other.
+system: online-boutique
+layers: [edge, app, domain, data]
+allow_layer_skip: true          # the frontend talks to domain services directly by design
+services:
+  frontend:              {layer: edge}
+  checkoutservice:       {layer: app,    context: ordering}
+  cartservice:           {layer: domain, context: ordering, owns: [redis-cart]}
+  productcatalogservice: {layer: domain, context: catalog}
+  recommendationservice: {layer: domain, context: catalog}
+  adservice:             {layer: domain, context: catalog}
+  currencyservice:       {layer: domain, context: payments}
+  paymentservice:        {layer: domain, context: payments}
+  shippingservice:       {layer: domain, context: fulfilment}
+  emailservice:          {layer: domain, context: fulfilment}
+dependencies:
+  frontend: [productcatalogservice, currencyservice, cartservice, recommendationservice,
+             shippingservice, checkoutservice, adservice]
+  checkoutservice: [productcatalogservice, shippingservice, paymentservice, emailservice,
+                    currencyservice, cartservice]
+  recommendationservice: [productcatalogservice]
+# How these names appear in telemetry: gRPC service names on client spans of
+# uninstrumented callees, and the Redis endpoint on database spans.
+aliases:
+  hipstershop.ProductCatalogService: productcatalogservice
+  hipstershop.CurrencyService: currencyservice
+  hipstershop.CartService: cartservice
+  hipstershop.RecommendationService: recommendationservice
+  hipstershop.ShippingService: shippingservice
+  hipstershop.CheckoutService: checkoutservice
+  hipstershop.AdService: adservice
+  hipstershop.PaymentService: paymentservice
+  hipstershop.EmailService: emailservice
+  redis://127.0.0.1:6379: redis-cart
+ignore:
+  operations: ["opentelemetry.proto.collector.*", "grpc.health.v1.Health/*"]

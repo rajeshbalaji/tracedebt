@@ -1,0 +1,51 @@
+system: draft
+layers:
+- edge
+- api
+- domain
+- data
+allow_layer_skip: false
+services:
+  adservice:
+    layer: api
+  cartservice:
+    layer: api
+    owns:
+    - redis-cart
+  checkoutservice:
+    layer: api
+  currencyservice:
+    layer: edge
+  emailservice:
+    layer: domain
+  frontend:
+    layer: edge
+  paymentservice:
+    layer: domain
+  productcatalogservice:
+    layer: api
+  recommendationservice:
+    layer: api
+  shippingservice:
+    layer: api
+dependencies:
+  checkoutservice:
+  - cartservice
+  - currencyservice
+  - emailservice
+  - paymentservice
+  - productcatalogservice
+  - shippingservice
+  frontend:
+  - adservice
+  - cartservice
+  - checkoutservice
+  - currencyservice
+  - productcatalogservice
+  - recommendationservice
+  - shippingservice
+  recommendationservice:
+  - productcatalogservice
+ignore:
+  services: []
+  operations: []

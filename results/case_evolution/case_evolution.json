@@ -1,0 +1,518 @@
+{
+ "windows": 18,
+ "traces_per_window": 870,
+ "runs": {
+  "updated": {
+   "findings": [
+    {
+     "rule": "UNDECLARED_XCTX",
+     "edges": [
+      [
+       "emailservice",
+       "productcatalogservice"
+      ]
+     ],
+     "first_seen": "w12",
+     "confirmed_at": "w14",
+     "resolved_at": null,
+     "exposure": 0.039
+    }
+   ],
+   "series": [
+    {
+     "window": "w00",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w01",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w02",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w03",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w04",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w05",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w06",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w07",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w08",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w09",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w10",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w11",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w12",
+     "phase": "e2",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w13",
+     "phase": "e2",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w14",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.1053,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w15",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.0998,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w16",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.0942,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w17",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.1166,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    }
+   ],
+   "swap_window": "w06"
+  },
+  "late": {
+   "findings": [
+    {
+     "rule": "UNDECLARED_XCTX",
+     "edges": [
+      [
+       "recommendationservice",
+       "cartservice"
+      ]
+     ],
+     "first_seen": "w06",
+     "confirmed_at": "w08",
+     "resolved_at": "w12",
+     "exposure": 0.624
+    },
+    {
+     "rule": "UNDECLARED_XCTX",
+     "edges": [
+      [
+       "emailservice",
+       "productcatalogservice"
+      ]
+     ],
+     "first_seen": "w12",
+     "confirmed_at": "w14",
+     "resolved_at": null,
+     "exposure": 0.039
+    }
+   ],
+   "series": [
+    {
+     "window": "w00",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w01",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w02",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w03",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w04",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w05",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w06",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w07",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w08",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.7587,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w09",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.8723,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w10",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.8723,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w11",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.8723,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w12",
+     "phase": "e2",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w13",
+     "phase": "e2",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w14",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.1053,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w15",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.0998,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w16",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.0942,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    },
+    {
+     "window": "w17",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 0.1166,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice"
+     ]
+    }
+   ],
+   "swap_window": "w10"
+  },
+  "never": {
+   "findings": [
+    {
+     "rule": "UNDECLARED_XCTX",
+     "edges": [
+      [
+       "recommendationservice",
+       "cartservice"
+      ]
+     ],
+     "first_seen": "w06",
+     "confirmed_at": "w08",
+     "resolved_at": null,
+     "exposure": 0.592
+    },
+    {
+     "rule": "UNDECLARED_XCTX",
+     "edges": [
+      [
+       "emailservice",
+       "productcatalogservice"
+      ]
+     ],
+     "first_seen": "w12",
+     "confirmed_at": "w14",
+     "resolved_at": null,
+     "exposure": 0.039
+    }
+   ],
+   "series": [
+    {
+     "window": "w00",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w01",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w02",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w03",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w04",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w05",
+     "phase": "v0",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w06",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w07",
+     "phase": "e1",
+     "severity": 0.0,
+     "exposure": 0.0,
+     "active": []
+    },
+    {
+     "window": "w08",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.7587,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w09",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.8723,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w10",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.7901,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w11",
+     "phase": "e1",
+     "severity": 3.0,
+     "exposure": 1.8131,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w12",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 1.8323,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w13",
+     "phase": "e2",
+     "severity": 3.0,
+     "exposure": 1.8606,
+     "active": [
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w14",
+     "phase": "e2",
+     "severity": 6.0,
+     "exposure": 1.9088,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice",
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w15",
+     "phase": "e2",
+     "severity": 6.0,
+     "exposure": 1.9062,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice",
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w16",
+     "phase": "e2",
+     "severity": 6.0,
+     "exposure": 2.0126,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice",
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    },
+    {
+     "window": "w17",
+     "phase": "e2",
+     "severity": 6.0,
+     "exposure": 1.8926,
+     "active": [
+      "UNDECLARED_XCTX:emailservice>productcatalogservice",
+      "UNDECLARED_XCTX:recommendationservice>cartservice"
+     ]
+    }
+   ],
+   "swap_window": null
+  }
+ }
+}

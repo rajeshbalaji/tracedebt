@@ -1,0 +1,430 @@
+{
+  "system": "online-boutique",
+  "windows": [
+    "w00",
+    "w01",
+    "w02",
+    "w03",
+    "w04",
+    "w05",
+    "w06",
+    "w07",
+    "w08",
+    "w09",
+    "w10",
+    "w11",
+    "w12",
+    "w13",
+    "w14",
+    "w15",
+    "w16",
+    "w17",
+    "w18",
+    "w19",
+    "w20",
+    "w21",
+    "w22",
+    "w23",
+    "w24",
+    "w25",
+    "w26",
+    "w27",
+    "w28",
+    "w29"
+  ],
+  "active": [
+    {
+      "rule": "CYCLE",
+      "key": [
+        "CYCLE",
+        "productcatalogservice",
+        "recommendationservice"
+      ],
+      "edges": [
+        [
+          "productcatalogservice",
+          "recommendationservice"
+        ]
+      ],
+      "severity": 4,
+      "first_seen": "w18",
+      "confirmed_at": "w20",
+      "resolved_at": null,
+      "exposure": 0.4935,
+      "latency_share": 0.1004,
+      "evidence_trace": "7d886126d6029a8d7bd7586747d2fbf3",
+      "triage": "open"
+    },
+    {
+      "rule": "UNDECLARED_XCTX",
+      "key": [
+        "UNDECLARED_XCTX",
+        "emailservice",
+        "productcatalogservice"
+      ],
+      "edges": [
+        [
+          "emailservice",
+          "productcatalogservice"
+        ]
+      ],
+      "severity": 3,
+      "first_seen": "w12",
+      "confirmed_at": "w14",
+      "resolved_at": null,
+      "exposure": 0.026,
+      "latency_share": 0.0073,
+      "evidence_trace": "c7ceac71025fd76f0c75f7882ed68554",
+      "triage": "open"
+    },
+    {
+      "rule": "UNDECLARED",
+      "key": [
+        "UNDECLARED",
+        "productcatalogservice",
+        "recommendationservice"
+      ],
+      "edges": [
+        [
+          "productcatalogservice",
+          "recommendationservice"
+        ]
+      ],
+      "severity": 2,
+      "first_seen": "w18",
+      "confirmed_at": "w20",
+      "resolved_at": null,
+      "exposure": 0.4935,
+      "latency_share": 0.1004,
+      "evidence_trace": "7d886126d6029a8d7bd7586747d2fbf3",
+      "triage": "open"
+    }
+  ],
+  "resolved": [
+    {
+      "rule": "FOREIGN_DATA",
+      "key": [
+        "FOREIGN_DATA",
+        "recommendationservice",
+        "db:redis-cart"
+      ],
+      "edges": [
+        [
+          "recommendationservice",
+          "db:redis-cart"
+        ]
+      ],
+      "severity": 5,
+      "first_seen": "w06",
+      "confirmed_at": "w08",
+      "resolved_at": "w26",
+      "exposure": 0.5556,
+      "latency_share": 0.0204,
+      "evidence_trace": "c618736d1ab86968e708c0b23b90a9bd",
+      "triage": "open"
+    }
+  ],
+  "indicators": [
+    {
+      "window": "w00",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w01",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w02",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w03",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w04",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w05",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w06",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w07",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w08",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 3.2759,
+      "trace_share": 0.6552,
+      "latency_share": 0.025
+    },
+    {
+      "window": "w09",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 3.5821,
+      "trace_share": 0.7164,
+      "latency_share": 0.0303
+    },
+    {
+      "window": "w10",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 3.2099,
+      "trace_share": 0.642,
+      "latency_share": 0.0266
+    },
+    {
+      "window": "w11",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 2.8,
+      "trace_share": 0.56,
+      "latency_share": 0.0273
+    },
+    {
+      "window": "w12",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 2.9747,
+      "trace_share": 0.5949,
+      "latency_share": 0.0262
+    },
+    {
+      "window": "w13",
+      "findings": 1,
+      "severity": 5.0,
+      "exposure": 3.2292,
+      "trace_share": 0.6458,
+      "latency_share": 0.035
+    },
+    {
+      "window": "w14",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.0235,
+      "trace_share": 0.5765,
+      "latency_share": 0.0266
+    },
+    {
+      "window": "w15",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.2471,
+      "trace_share": 0.6353,
+      "latency_share": 0.0294
+    },
+    {
+      "window": "w16",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.7609,
+      "trace_share": 0.7391,
+      "latency_share": 0.0301
+    },
+    {
+      "window": "w17",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.1183,
+      "trace_share": 0.5914,
+      "latency_share": 0.0248
+    },
+    {
+      "window": "w18",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.275,
+      "trace_share": 0.625,
+      "latency_share": 0.0247
+    },
+    {
+      "window": "w19",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 3.087,
+      "trace_share": 0.5978,
+      "latency_share": 0.0269
+    },
+    {
+      "window": "w20",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 6.8043,
+      "trace_share": 0.6739,
+      "latency_share": 0.1307
+    },
+    {
+      "window": "w21",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 6.0843,
+      "trace_share": 0.6024,
+      "latency_share": 0.1259
+    },
+    {
+      "window": "w22",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 6.6667,
+      "trace_share": 0.6778,
+      "latency_share": 0.1205
+    },
+    {
+      "window": "w23",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 5.6444,
+      "trace_share": 0.5889,
+      "latency_share": 0.102
+    },
+    {
+      "window": "w24",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 5.9234,
+      "trace_share": 0.4951,
+      "latency_share": 0.1022
+    },
+    {
+      "window": "w25",
+      "findings": 4,
+      "severity": 14.0,
+      "exposure": 6.0436,
+      "trace_share": 0.519,
+      "latency_share": 0.1091
+    },
+    {
+      "window": "w26",
+      "findings": 3,
+      "severity": 9.0,
+      "exposure": 3.3,
+      "trace_share": 0.5429,
+      "latency_share": 0.095
+    },
+    {
+      "window": "w27",
+      "findings": 3,
+      "severity": 9.0,
+      "exposure": 3.0782,
+      "trace_share": 0.5059,
+      "latency_share": 0.0945
+    },
+    {
+      "window": "w28",
+      "findings": 3,
+      "severity": 9.0,
+      "exposure": 2.7143,
+      "trace_share": 0.4524,
+      "latency_share": 0.0922
+    },
+    {
+      "window": "w29",
+      "findings": 3,
+      "severity": 9.0,
+      "exposure": 3.039,
+      "trace_share": 0.4935,
+      "latency_share": 0.1076
+    }
+  ],
+  "stale_declarations": [],
+  "inferred_edges": [
+    [
+      "checkoutservice",
+      "currencyservice"
+    ],
+    [
+      "checkoutservice",
+      "paymentservice"
+    ],
+    [
+      "checkoutservice",
+      "shippingservice"
+    ],
+    [
+      "frontend",
+      "adservice"
+    ],
+    [
+      "frontend",
+      "currencyservice"
+    ],
+    [
+      "frontend",
+      "shippingservice"
+    ]
+  ],
+  "coverage": {
+    "cartservice": {
+      "traces_per_window": 61.8,
+      "p_min": 0.03105
+    },
+    "checkoutservice": {
+      "traces_per_window": 9.5,
+      "p_min": 0.1854
+    },
+    "currencyservice": {
+      "traces_per_window": 61.0,
+      "p_min": 0.03143
+    },
+    "emailservice": {
+      "traces_per_window": 1.2,
+      "p_min": 0.78953
+    },
+    "frontend": {
+      "traces_per_window": 67.0,
+      "p_min": 0.02866
+    },
+    "paymentservice": {
+      "traces_per_window": 1.5,
+      "p_min": 0.7271
+    },
+    "productcatalogservice": {
+      "traces_per_window": 62.0,
+      "p_min": 0.03093
+    },
+    "recommendationservice": {
+      "traces_per_window": 46.8,
+      "p_min": 0.04081
+    }
+  }
+}

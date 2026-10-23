@@ -1,0 +1,12 @@
+digraph tracedebt {
+  rankdir=TB; node [shape=box, fontsize=10];
+  subgraph "cluster_broker" { label="broker"; style=dashed; "topic:route-events" [shape=parallelogram]; }
+  subgraph "cluster_domain" { label="domain"; "assurance-svc"; "basic-svc"; "route-svc"; }
+  subgraph "cluster_data" { label="data"; "db:assurance-db" [shape=cylinder]; }
+  "assurance-svc" -> "db:assurance-db" [color=gray60];
+  "assurance-svc" -> "topic:route-events" [color=red, penwidth=2, fontcolor=red, fontsize=8, label="FOREIGN_TOPIC"];
+  "basic-svc" -> "assurance-svc" [color=red, penwidth=2, fontcolor=red, fontsize=8, label="UNDECLARED_XCTX"];
+  "basic-svc" -> "db:assurance-db" [color=red, penwidth=2, fontcolor=red, fontsize=8, label="FOREIGN_DATA"];
+  "route-svc" -> "topic:route-events" [color=gray60];
+  "topic:route-events" -> "basic-svc" [color=gray60];
+}

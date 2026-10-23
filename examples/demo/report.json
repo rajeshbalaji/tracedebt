@@ -1,0 +1,190 @@
+{
+  "system": "ticketing-demo",
+  "windows": [
+    "w0",
+    "w1",
+    "w2",
+    "w3",
+    "w4",
+    "w5"
+  ],
+  "active": [
+    {
+      "rule": "FOREIGN_DATA",
+      "key": [
+        "FOREIGN_DATA",
+        "basic-svc",
+        "db:assurance-db"
+      ],
+      "edges": [
+        [
+          "basic-svc",
+          "db:assurance-db"
+        ]
+      ],
+      "severity": 5,
+      "first_seen": "w2",
+      "confirmed_at": "w4",
+      "resolved_at": null,
+      "exposure": 0.2632,
+      "latency_share": 0.0385,
+      "evidence_trace": "66a6t",
+      "triage": "open"
+    },
+    {
+      "rule": "FOREIGN_TOPIC",
+      "key": [
+        "FOREIGN_TOPIC",
+        "assurance-svc",
+        "topic:route-events"
+      ],
+      "edges": [
+        [
+          "assurance-svc",
+          "topic:route-events"
+        ]
+      ],
+      "severity": 4,
+      "first_seen": "w3",
+      "confirmed_at": "w5",
+      "resolved_at": null,
+      "exposure": 0.3974,
+      "latency_share": 0.0166,
+      "evidence_trace": "66a6t",
+      "triage": "open"
+    },
+    {
+      "rule": "UNDECLARED_XCTX",
+      "key": [
+        "UNDECLARED_XCTX",
+        "basic-svc",
+        "assurance-svc"
+      ],
+      "edges": [
+        [
+          "basic-svc",
+          "assurance-svc"
+        ]
+      ],
+      "severity": 3,
+      "first_seen": "w2",
+      "confirmed_at": "w4",
+      "resolved_at": null,
+      "exposure": 0.1605,
+      "latency_share": 0.0473,
+      "evidence_trace": "66d6t",
+      "triage": "open"
+    }
+  ],
+  "resolved": [],
+  "indicators": [
+    {
+      "window": "w0",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w1",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w2",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w3",
+      "findings": 0,
+      "severity": 0.0,
+      "exposure": 0.0,
+      "trace_share": 0.0,
+      "latency_share": 0.0
+    },
+    {
+      "window": "w4",
+      "findings": 2,
+      "severity": 8.0,
+      "exposure": 2.0576,
+      "trace_share": 0.3979,
+      "latency_share": 0.0869
+    },
+    {
+      "window": "w5",
+      "findings": 3,
+      "severity": 12.0,
+      "exposure": 3.3868,
+      "trace_share": 0.4553,
+      "latency_share": 0.1025
+    }
+  ],
+  "stale_declarations": [],
+  "inferred_edges": [],
+  "coverage": {
+    "assurance-svc": {
+      "traces_per_window": 293.5,
+      "p_min": 0.00662
+    },
+    "auth-svc": {
+      "traces_per_window": 84.8,
+      "p_min": 0.02272
+    },
+    "basic-svc": {
+      "traces_per_window": 229.2,
+      "p_min": 0.00846
+    },
+    "contacts-svc": {
+      "traces_per_window": 224.0,
+      "p_min": 0.00866
+    },
+    "gateway": {
+      "traces_per_window": 385.8,
+      "p_min": 0.00504
+    },
+    "geo-svc": {
+      "traces_per_window": 240.2,
+      "p_min": 0.00808
+    },
+    "loyalty-svc": {
+      "traces_per_window": 97.2,
+      "p_min": 0.01983
+    },
+    "mobile-bff": {
+      "traces_per_window": 236.2,
+      "p_min": 0.00821
+    },
+    "rebook-svc": {
+      "traces_per_window": 258.2,
+      "p_min": 0.00751
+    },
+    "route-svc": {
+      "traces_per_window": 74.8,
+      "p_min": 0.02572
+    },
+    "seat-svc": {
+      "traces_per_window": 134.8,
+      "p_min": 0.01435
+    },
+    "station-svc": {
+      "traces_per_window": 105.0,
+      "p_min": 0.01838
+    },
+    "travel-svc": {
+      "traces_per_window": 21.5,
+      "p_min": 0.08662
+    },
+    "web-bff": {
+      "traces_per_window": 149.5,
+      "p_min": 0.01295
+    }
+  }
+}

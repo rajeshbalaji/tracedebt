@@ -1,0 +1,57 @@
+From 52df789fcd676df02dfba53bc1c35d1384b96bf3 Mon Sep 17 00:00:00 2001
+From: TraceDebt case study <casestudy@example.org>
+Date: Thu, 22 Oct 2026 07:19:26 -0700
+Subject: [PATCH 3/5] emailservice: list product names in the order
+ confirmation (calls productcatalogservice)
+
+---
+ src/emailservice/email_server.py | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/src/emailservice/email_server.py b/src/emailservice/email_server.py
+index b14771ea..6d73a584 100755
+--- a/src/emailservice/email_server.py
++++ b/src/emailservice/email_server.py
+@@ -31,7 +31,7 @@ from grpc_health.v1 import health_pb2
+ from grpc_health.v1 import health_pb2_grpc
+ 
+ from opentelemetry import trace
+-from opentelemetry.instrumentation.grpc import GrpcInstrumentorServer
++from opentelemetry.instrumentation.grpc import GrpcInstrumentorClient, GrpcInstrumentorServer
+ from opentelemetry.sdk.trace import TracerProvider
+ from opentelemetry.sdk.trace.export import BatchSpanProcessor
+ from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+@@ -106,8 +106,21 @@ class EmailService(BaseEmailService):
+     return demo_pb2.Empty()
+ 
+ class DummyEmailService(BaseEmailService):
++  def __init__(self):
++    # Put product names in the confirmation instead of bare ids.
++    self.catalog = None
++    addr = os.environ.get('PRODUCT_CATALOG_SERVICE_ADDR')
++    if addr:
++      self.catalog = demo_pb2_grpc.ProductCatalogServiceStub(grpc.insecure_channel(addr))
++
+   def SendOrderConfirmation(self, request, context):
+-    logger.info('A request to send order confirmation email to {} has been received.'.format(request.email))
++    names = []
++    if self.catalog is not None:
++      for item in request.order.items:
++        p = self.catalog.GetProduct(demo_pb2.GetProductRequest(id=item.item.product_id))
++        names.append(p.name)
++    logger.info('A request to send order confirmation email to {} has been received ({}).'.format(
++        request.email, ', '.join(names)))
+     return demo_pb2.Empty()
+ 
+ class HealthCheck():
+@@ -191,6 +204,7 @@ if __name__ == '__main__':
+       )
+     grpc_server_instrumentor = GrpcInstrumentorServer()
+     grpc_server_instrumentor.instrument()
++    GrpcInstrumentorClient().instrument()
+ 
+   except (KeyError, DefaultCredentialsError):
+       logger.info("Tracing disabled.")
+-- 
+2.43.0
+
